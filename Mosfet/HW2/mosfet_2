@@ -1,0 +1,29 @@
+*In tehe name of allah
+*Mosfet Transfer Function
+*all pin in lowercase
+* V_ac gnd gate SIN ( 0 10m 1K)
+* V3	ammeterd	drain	DC	0	*ammeter
+*Name	Node+	Node-	TYPE	Value	Comment
+
+Vs	Vdd	gnd	DC	5
+Vg	gate	gnd	DC	1
+.MODEL	MOSBN	NMOS	level=1 KP=200U VTO=0.4
+.MODEL	MOSBP	PMOS	level=1 KP=100U VTO=-0.4
+M1	out	gate	Vdd	Vdd	MOSBP L=0.1U W=5U
+M2	out	gate	source	source	MOSBN L=0.1U W=5U
+R1	source	gnd	1
+
+.control
+*	Type	Device	Min	Max	Resolution
+	dc	Vg	0	5	0.05
+	plot	V(out)
+	plot	V(source)
+	plot	@m1[is]
+	plot	@m2[is]
+*plot width of M1 mosfet
+*plot @m1[w]
+*plot @MOSB[kp]
+* if you try to show model parameter it must be used
+.endc
+
+.end

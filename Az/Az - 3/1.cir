@@ -1,0 +1,23 @@
+* Az3
+
+$V1	vcc gnd DC 2
+V1	2 gnd DC 0.9
+V2	3 gnd DC 1.68
+R1	3 5 1K
+R2	2 1 1K
+R3	1 5 1K
+R4	2 3 1K
+R5	gnd 5 6.8K
+R6	gnd 1 2.2K
+$Rx1	vcc 2 500
+$Rx2	2 gnd 500
+$Ry1	vcc 3 10
+$Ry2	3 gnd 90
+
+.control
+	TRAN	1us 1ms  uic
+	plot	V(1)
+	plot	V(5)
+.endc
+
+.end

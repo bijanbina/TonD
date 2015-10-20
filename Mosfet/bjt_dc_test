@@ -1,0 +1,18 @@
+*BJT Test1
+
+Vs	vdd	gnd	DC=0
+VC	vdd	collector	DC 0
+V3	ammeter1	gnd	DC 1
+VB	ammeter1	base	DC 0
+.model QMOD1 npn
+Q1 collector base emitter QMOD1
+VE emitter ammeter2 DC 0
+R1 ammeter2 gnd 100
+
+.control
+	dc V1 0 2 0.05
+	plot v(base)
+	plot i(VB) i(VC)
+	plot i(VE)
+.endc
+.end

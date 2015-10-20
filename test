@@ -1,0 +1,9 @@
+Variable inductor
+c1 1 0 1000uf ic=1
+r1 1 0 1k
+*
+l1 2 0 1H ic=1
+r2 2 0 1.0
+*
+.tran 0.01 3 uic
+.end

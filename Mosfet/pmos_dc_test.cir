@@ -1,0 +1,15 @@
+*PMOS DC TEST
+
+Vs	vdd	gnd	DC=0
+Vg	vdd	gate	DC=5	*reverse bias
+*R1	ammeter2	gnd 	100
+M1	drain	gate	vdd	vdd	PMOSB
+V1	drain	gnd	DC=0
+.MODEL	NMOSB	NMOS	level=1	KP=200U	VTO=0.4
+.MODEL	PMOSB	PMOS	level=1	KP=100U	VTO=-0.4
+
+.control
+	dc	Vs	0	10	0.01
+	plot	I(V1)
+.endc
+.end

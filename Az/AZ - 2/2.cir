@@ -1,0 +1,13 @@
+* Az3 - 2
+
+Vs	vi	gnd	DC	2
+R1	vi	vo	1K
+A1	vo	gnd	zenerb
+.model	zenerb	zener(v_breakdown=5.0 i_breakdown=0.02 r_breakdown=1.0 i_rev=1e-6 i_sat=1e-12)
+
+.control
+	dc	Vs	-10	10	0.05
+	plot	V(vo)
+.endc
+
+.end

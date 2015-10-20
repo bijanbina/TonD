@@ -1,0 +1,14 @@
+* Single Diode
+
+Vs	Vi	gnd	DC	2
+R1	Vi	Vo	1K
+A1	Vo	e1	zenerb
+A2	gnd	e1	zenerb
+.MODEL	zenerb	zener(v_breakdown=5.0 i_breakdown=0.02 r_breakdown=1.0 i_rev=1e-6 i_sat=1e-12)
+
+.control
+	dc	Vs	-10	10	0.05
+	plot	V(Vo)
+.endc
+
+.end

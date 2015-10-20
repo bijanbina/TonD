@@ -1,0 +1,20 @@
+*BJT Amplifier
+
+Vs	Vcc gnd DC 10
+R1	Vcc ammeterc 1K
+V3	ammeterc collector  DC 0
+Vin base input SIN ( 0 1m 1K)
+VB	input ammeterb DC 0.8
+.model QMOD1 npn VAF=10
+Q1	collector base emitter QMOD1
+Vab	ammeterb gnd DC 0
+Vae	emitter gnd DC 0
+
+.control
+	TRAN	0.1us 2ms uic
+	plot	V(base) ylimit 0.75 0.95 xlimit 0.5m 2m
+	plot	V(collector) xlimit 0.5m 2m
+	plot	i(V3) xlimit 0.5m 2m
+.endc
+
+.end

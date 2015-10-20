@@ -1,0 +1,17 @@
+* Az3 - 2
+
+V1	vcc gnd DC 2
+R1	vcc e2 1K
+R2	gnd e1 1K
+R3	vcc e1 2K
+R4	gnd e2 500
+R5	e1 e2 12K
+
+.control
+	TRAN	1us 1ms  uic
+	plot	V(e1)
+	plot	V(e2)
+	plot	I(V1)
+.endc
+
+.end

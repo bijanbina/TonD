@@ -1,0 +1,21 @@
+*this is FWR
+
+VIN vcc gnd SIN ( 0 311 60) DC=0 AC=311
+.model DMOD D (rs=10)
+D1 vcc in1 DMOD
+D2 in2 vcc DMOD
+D3 gnd in1 DMOD
+D4 in2 gnd DMOD
+$VA in1 cin
+$C1 cin in2 680u
+C1 r1 in2 0.6m
+Rl in1 r1 1K
+
+.control
+	TRAN	1ms 10s
+	plot	V(vcc)
+	plot	V(r1) - V(in2)
+	plot	I(vin)
+.endc
+
+.end

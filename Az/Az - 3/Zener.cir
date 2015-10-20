@@ -1,0 +1,18 @@
+* Az3 - 2
+
+V1	vcc gnd DC 2
+R1	vcc a 180
+R2	gnd b 180
+R3	vcc b 220
+R4	gnd a 220
+V2  a	b DC 0 
+
+.control
+	TRAN	1us 1ms  uic
+	plot	V(a)
+	plot	V(b)
+	plot	V(a) - v(b)
+	plot	I(V2)
+.endc
+
+.end

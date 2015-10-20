@@ -1,0 +1,15 @@
+LC
+
+V1 1 a DC 0 $ <---- ammeter
+C1 1 0 680u IC=400
+R2 a r 5
+L1 r 0 100m IC=0
+ 
+
+.control
+	TRAN	1us 100ms  uic
+	plot	V(1)
+	plot	I(V1)
+.endc
+
+.end

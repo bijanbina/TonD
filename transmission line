@@ -1,0 +1,16 @@
+Transmission line
+
+V1 1 0 1
+V2 5 6 DC 0 $ <---- ammeter
+C1 2 0 10uf IC=0
+C2 3 0 10uf IC=0
+C3 4 0 10uf IC=0
+L1 1 2 0.5 IC=0
+L2 2 3 0.5 IC=0
+L3 3 4 0.5 IC=0
+L4 4 5 0.5 IC=0
+R1 6 0 1000
+
+.TRAN 100u 0.2 uic
+.PLOT v(3)
+.end

@@ -1,0 +1,17 @@
+series circuit
+
+v1 1 0 DC=0
+r1 1 2 3k
+r2 2 3 10k
+r3 3 0 5k
+
+.control
+dc v1 -9 9 1
+* this will show you which vectors are available
+display
+* this will plot some of them
+plot v(1,2) v(2,3) v(3)
+plot v1#branch
+plot v(3)^2
+.endc
+.end

@@ -1,0 +1,16 @@
+*PMOS AC Input Test
+
+Vs	vdd	gnd	DC=8
+Vg	gnd	gate	DC=5	*reverse bias
+R1	drain	gnd 	100K
+M1	drain	gate	vdd	vdd	PMOSB
+.MODEL	NMOSB	NMOS	level=1	KP=200U	VTO=0.4
+.MODEL	PMOSB	PMOS	level=1	KP=100U	VTO=-0.4
+Itest	drain	gnd	AC	1	
+
+.control
+	AC	LIN	10	100	5MEG
+	plot	V(drain)
+.endc
+.end
+

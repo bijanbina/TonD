@@ -1,0 +1,20 @@
+*BJT Transfer Function
+
+Vs	Vcc gnd DC 2.5
+R1	Vcc ammeterc 80
+V3	ammeterc collector  DC 0
+VB	input ammeterb DC 0.8
+Vin base input SIN ( 0 10m 1K)
+.model QMOD1 npn
+Q1	collector base emitter QMOD1
+C1 	collector gnd 2pF
+Vab	ammeterb gnd DC 0
+Vae	emitter gnd DC 0
+
+.control
+	TRAN	0.1us 2ms uic
+	plot	V(base)
+	plot	V(collector)
+.endc
+
+.end
