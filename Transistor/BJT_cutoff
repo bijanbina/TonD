@@ -1,15 +1,15 @@
 *BJT Cutoff
 
-V1	vdd gnd DC 5
-V2	A gnd DC -5
-Vin base gnd DC=0
-.model QMOD1 npn BF=10000
-Q1	collector base emitter QMOD1
-R1	vdd collector 500
-R2	emitter A 1K
+V1	VCC	GND	DC	5
+Vin	base	GND	AC=0.1
+.model	QMOD1	npn	BF=100
+Q1	collector	base	emitter	QMOD1
+R1	VCC	collector	500
+R2	emitter	A	1K
+C1	A	GND
 
 .control
-	dc Vin -6 6 0.05
-	plot v(collector)
+	dc	Vin	-6	6	0.05
+	plot	v(collector)
 .endc
 .end
