@@ -1,0 +1,9 @@
+# Fdb version 3
+["pdflatex"] 1445577344 "CE.tex" "CE.pdf" "CE" 1445577344
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1441055625 31669 df537245012f3e5f05bdc55644b7a3df ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1443595181 7209435 4ab5fc407911ab293fb34afd2772248d ""
+  "CE.aux" 1445577344 8 a94a2480d3289e625eea47cd1b285758 ""
+  "CE.tex" 1445577343 3403 b78eb12b2682a2da6744fc7bee2ae112 ""
+  (generated)
+  "CE.pdf"
+  "CE.log"

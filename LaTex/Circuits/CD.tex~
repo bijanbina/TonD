@@ -1,0 +1,172 @@
+\documentclass{article}
+\usepackage[american,siunitx,smartlabels,arrowmos]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{automata}
+\usetikzlibrary{calc}
+%d4d4d4
+
+\begin{document}
+\input{circuitW}
+\def \TondVcc{node [anchor=south] {$V_{CC}$} ++(-\VccLabelSpace,0) --  ++(2*\VccLabelSpace,0)}%VCC
+\ctikzset{bipoles/length=1cm}
+\begin{figure}
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\small]
+\input{parameter}
+
+\draw (VCC2) \TondVcc;%VCC
+\draw (VCC1) \TondVcc;%VCC
+\draw (VCC1) ++ (0,-\VccToMos) node[nmos](mos) {};
+
+\node  [ground] at (GND1){};%GND
+\node  [ground] at (GND2){};%GND
+\draw (mos.source) to[R=$R_S$] (GND1) {};%GND
+\draw (VCC1) to [R=\small{$R_D$}] (mos.drain);%RD
+\draw (VCC2) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
+\draw (RG1) to [R=$R_2$] (GND2);%RG2
+\draw (mos.gate) -- (GATE_IN); %Short Circuit
+%(mos.source) node[anchor=north] {S};
+\nwTondComment{mos.drain}{$r_o$};
+\swTondComment{mos.source}{$\frac{1}{g_m}$};
+
+%----------------Signal--------------
+\draw (GND_SIG) node [ground] {};%GND
+\draw (R_IN) to [R=$R_{sig}$] (C_IN) to[C=$C$] (GATE_IN);%Rsig
+\draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
+
+%-------------Load & Out-------------
+\coordinate (V_out)  at  ($ (mos.drain)  + (\LevelSpace,0) $);
+\coordinate (R_Load)  at  ($ (mos.drain)  + (\LevelSpace,0) - (1,0) $);
+\coordinate (GND_Load) at  ($ (R_Load) - (0,2) $);
+
+\draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
+\node  [ground] at (GND_Load){};%GND
+\draw (mos.drain) to [C=$C$,*-] (R_Load) to[short,-o] (V_out) node [anchor=north west] {$V_o$};%Rl
+
+\end{circuitikz}
+\caption{Mosfet Common Drain}
+\end{figure}
+
+\begin{figure}
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\small]
+\def \MosOffset {-0.25} %pgfmathparse used to make expression unify
+\input{parameter}
+
+\draw (VCC2) \TondVcc;%VCC
+\draw (VCC1) \TondVcc;%VCC
+\draw (VCC1) ++ (0,-\VccToMos) node[nmos](mos) {};
+
+\node  [ground] at (GND1){};%GND
+\node  [ground] at (GND2){};%GND
+\draw (mos.source) to[R=$R_S$] (GND1) {};%GND
+\draw (VCC1) to [R=\small{$R_D$}] (mos.drain);%RD
+\draw (VCC2) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
+\draw (RG1) to [R=$R_2$] (GND2);%RG2
+\draw (mos.gate) -- (GATE_IN); %Short Circuit
+%(mos.source) node[anchor=north] {S};
+\nwTondComment{mos.drain}{$r_o$};
+\swTondComment{mos.source}{$\frac{1}{g_m}$};
+
+%----------------Signal--------------
+\draw (GND_SIG) node [ground] {};%GND
+\draw (R_IN) to [R=$R_{sig}$] (C_IN) to[C=$C$] (GATE_IN);%Rsig
+\draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
+
+%-------------Load & Out-------------
+\coordinate (V_out)  at  ($ (mos.source)  + (\LevelSpace,0) $);
+\coordinate (R_Load)  at  ($ (mos.source)  + (\LevelSpace,0) - (1,0) $);
+\coordinate (GND_Load) at  ($ (R_Load) - (0,2) $);
+
+\draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
+\node  [ground] at (GND_Load){};%GND
+\draw (mos.source) to [C=$C$,*-] (R_Load) to[short,-o] (V_out) node [anchor=north west] {$V_o$};%Rl
+
+\end{circuitikz}
+\caption{Mosfet Common Source}
+\end{figure}
+
+\begin{figure}
+
+
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\small]
+\input{parameter}
+
+\draw (VCC2) \TondVcc;%VCC
+\draw (VCC1) \TondVcc;%VCC
+\draw (VCC1) ++ (0,-\VccToMos) node[npn](mos) {};
+
+\node  [ground] at (GND1){};%GND
+\node  [ground] at (GND2){};%GND
+\draw (mos.emitter) to[R=$R_E$] (GND1) {};%GND
+\draw (VCC1) to [R=\small{$R_C$}] (mos.collector);%RD
+\draw (VCC2) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
+\draw (RG1) to [R=$R_2$] (GND2);%RG2
+\draw (mos.base) -- (GATE_IN); %Short Circuit
+
+%-------------Annotate---------------
+\nwTondComment{mos.collector}{$r_o$};
+\swTondComment{mos.emitter}{$r_b$};
+
+%----------------Signal--------------
+\draw (GND_SIG) node [ground] {};%GND
+\draw (R_IN) to [R=$R_{sig}$] (C_IN) to[C=$C$] (GATE_IN);%Rsig
+\draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
+
+%-------------Load & Out-------------
+\coordinate (V_out)  at  ($ (mos.collector)  + (\LevelSpace,0) $);
+\coordinate (R_Load)  at  ($ (mos.collector)  + (\LevelSpace,0) - (1,0) $);
+\coordinate (GND_Load) at  ($ (R_Load) - (0,2) $);
+
+\draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
+\node  [ground] at (GND_Load){};%GND
+\draw (mos.collector) to [C=$C$,*-] (R_Load) to[short,-o] (V_out) node [anchor=north west] {$V_o$};%Rl
+
+\end{circuitikz}
+\caption{BJT test}
+\end{figure}
+
+\begin{figure}
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\small]
+\def \MosOffset {-0.25} %pgfmathparse used to make expression unify
+\input{parameter}
+
+\draw (VCC2) \TondVcc;%VCC
+\draw (VCC1) \TondVcc;%VCC
+\draw (VCC1) ++ (0,-\VccToMos) node[npn](mos) {};
+
+\node  [ground] at (GND1){};%GND
+\node  [ground] at (GND2){};%GND
+\draw (mos.emitter) to[R=$R_E$] (GND1) {};%GND
+\draw (VCC1) to [R=\small{$R_C$}] (mos.collector);%RD
+\draw (VCC2) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
+\draw (RG1) to [R=$R_2$] (GND2);%RG2
+\draw (mos.base) -- (GATE_IN); %Short Circuit
+
+%-------------Annotate---------------
+\nwTondComment{mos.collector}{$r_o$};
+\swTondComment{mos.emitter}{$r_b$};
+
+%----------------Signal--------------
+\draw (GND_SIG) node [ground] {};%GND
+\draw (R_IN) to [R=$R_{sig}$] (C_IN) to[C=$C$] (GATE_IN);%Rsig
+\draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
+
+%-------------Load & Out-------------
+\coordinate (V_out)  at  ($ (mos.emitter)  + (\LevelSpace,0) $);
+\coordinate (R_Load)  at  ($ (mos.emitter)  + (\LevelSpace,0) - (1,0) $);
+\coordinate (GND_Load) at  ($ (R_Load) - (0,2) $);
+
+\draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
+\node  [ground] at (GND_Load){};%GND
+\draw (mos.emitter) to [C=$C$,*-] (R_Load) to[short,-o] (V_out) node [anchor=north west] {$V_o$};%Rl
+
+\end{circuitikz}
+\caption{BJT test}
+\end{figure}
+
+
+\end{document}
