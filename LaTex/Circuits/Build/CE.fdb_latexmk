@@ -1,9 +1,0 @@
-# Fdb version 3
-["pdflatex"] 1445531802 "CE.tex" "./Build/CE.pdf" "CE" 1445531802
-  "./Build/CE.aux" 1445531802 8 a94a2480d3289e625eea47cd1b285758 ""
-  "/usr/share/texmf-dist/web2c/texmf.cnf" 1441055625 31669 df537245012f3e5f05bdc55644b7a3df ""
-  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1443595181 7209435 4ab5fc407911ab293fb34afd2772248d ""
-  "CE.tex" 1445531589 3355 2c2ac31c40420844bdbf83b11b5357d0 ""
-  (generated)
-  "./Build/CE.pdf"
-  "./Build/CE.log"
