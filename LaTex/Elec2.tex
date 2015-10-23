@@ -5,12 +5,19 @@
 \input{Design/missions}
 \input{Design/header}
 \usepackage{lipsum}  
-
-
 \begin{document}
 \pagecolor{backGray}\afterpage{\pagecolor{backCirc}}
 \maketitle
+
+
+\newcommand{\TonDdef}[1]{
+\pdfbookmark[0]{#1}{#1}
+\renewcommand{\Places}{#1} % Teacher/lecturer
+}
+
+
 \newpage
+\TonDdef{Common Source} % Teacher/lecturer
 \input{Circuits/TonD}
 \ctikzset{bipoles/length=1cm}
 \ctikzset{bipoles/resistor/height=0.25}
@@ -28,8 +35,13 @@
 \begin{minipage}[b]{.5\textwidth}
 \raggedleft
 \input{Circuits/CS}
+%\makesectionhead{Mosfet}{Common source}
 \end{minipage}%
+
+
+
 \newpage
+\TonDdef{Common Gate}
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \lipsum[1-4]
 \setlength{\parindent}{0.0cm} 
@@ -44,7 +56,11 @@
 \centering
 \input{Circuits/CG}
 \end{minipage}%
+
+
+
 \newpage
+\TonDdef{Common Drain} % Teacher/lecturer
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \lipsum[1-4]
 \setlength{\parindent}{0.0cm} 
@@ -59,7 +75,11 @@
 \raggedleft
 \input{Circuits/CD}
 \end{minipage}%
+
+
+
 \newpage
+\TonDdef{Common Emiiter} % Teacher/lecturer
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \lipsum[1-4]
 \setlength{\parindent}{0.0cm} 
@@ -74,7 +94,11 @@
 \raggedleft
 \input{Circuits/CE}
 \end{minipage}%
+
+
+
 \newpage
+\TonDdef{Common Base} % Teacher/lecturer
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \lipsum[1-4]
 \setlength{\parindent}{0.0cm} 
@@ -89,7 +113,11 @@
 \centering
 \input{Circuits/CB}
 \end{minipage}%
+
+
+
 \newpage
+\TonDdef{Common Collector} % Teacher/lecturer
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \lipsum[1-4]
 \setlength{\parindent}{0.0cm} 
@@ -104,5 +132,4 @@
 \raggedleft
 \input{Circuits/CC}
 \end{minipage}%
-
 \end{document}
