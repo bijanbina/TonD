@@ -1,50 +1,60 @@
 \documentclass{article}
-\usepackage[american,siunitx,smartlabels,arrowmos]{circuitikz}
-\input{circuitW}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta}
-\usetikzlibrary{automata}
-\usetikzlibrary{calc}
+\input{Design/packages}
+\input{Design/element4}
+\input{Design/design}
+\input{Design/missions}
+
+
+%----------------------------------------------------------------------------------------
+%	NAME AND CLASS SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\confTitle}{Electronic II} % Assignment title
+\newcommand{\hmwkDueDate}{TonD Project} % Due date
+\newcommand{\Places}{by Bijan Binaee} % Teacher/lecturer
+\newcommand{\confCompany}{Summary} % Your name
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{
+\vspace{3.5in}
+\textcolor{white}{\textmd{\fontsize{40}{40}\fontspec{Asap}\textbf{\confTitle}}\\
+\vspace{3.75in}
+\small{\hmwkDueDate}\\
+\vspace{-0.1in}
+\large{\textit{\Places}}}
+}
+
+\author{\textcolor{white}{\textbf{\confCompany}}}
+\date{} % Insert date here if you want it to appear below your name
+
+%----------------------------------------------------------------------------------------
+%	Fonts
+%----------------------------------------------------------------------------------------
+
+\newfontfamily{\arabicfont}[Script=Arabic]{Koodak}
+
+%----------------------------------------------------------------------------------------
+%                                                                                       %
+%                                       START DOCUMENT                                  %
+%                                                                                       %
+%----------------------------------------------------------------------------------------
 
 \begin{document}
-\begin{figure}
-\begin{circuitikz}
-\coordinate (VCC2) at (3,6);
-\coordinate (VCC1) at  ($ (VCC2) + (2,0) $);
-\draw (VCC2) node [anchor=south] {$V_{CC}$} ++(-0.4,0) --  ++(0.8,0);%VCC
-\draw (VCC1) node [anchor=south] {$V_{CC}$} ++(-0.4,0) --  ++(0.8,0);%VCC
-\draw (VCC1) ++ (0,-3.5) node[nmos](mos) {}
-(mos.gate) node[anchor=north] {G}
-(mos.drain) node[anchor=east] {D}
-(mos.source) node[anchor=east] {S};
-\draw (mos.source) to ($ (VCC1) - (0,6) $) node [ground](GND1) {};%GND
-\draw (VCC2) ++ (0,-6) node [ground](GND2) {};%GND
-\draw (VCC1) to [R=$R_D$] (mos.drain);%RD
-\draw (VCC2) to [R=$R_1$] ++(0,-4) node(RG1) {};%RG1
-\draw (RG1) to [R=$R_2$] (GND2);%RG2
-\draw (mos.gate) -- ++ (-1,0); %Short Circuit
-%(mos.source) node[anchor=north] {S};
-\draw [Stealth-] (mos.source) ++ (0.5,0) -- ++(0,-0.5) -- ++(0.5,0)  node [anchor=west] {$\frac{1}{g_m}$}    ;
-\draw [Stealth-] (mos.drain) ++ (0.5,0) -- ++(0,+0.5) -- ++(0.5,0)  node [anchor=west] {$r_o$}    ;
-\end{circuitikz}
-\caption{Test2}
-\end{figure}
+\pagecolor{backGray}\afterpage{\pagecolor{backCirc}}
+\maketitle
+\newpage
 
+\input{Circuits/TonD}
+\def \TondVcc{node [anchor=south] {$V_{CC}$} ++(-\VccLabelSpace,0) --  ++(2*\VccLabelSpace,0)}%VCC
+\ctikzset{bipoles/length=1cm}
+\ctikzset{bipoles/resistor/height=0.25}
+\ctikzset{bipoles/capacitor/height=0.4}
+\input{Circuits/CD}
+\input{Circuits/CS}
+\input{Circuits/CE}
+\input{Circuits/CC}
 
-\begin{figure}
-\begin{circuitikz}
-\draw (0,0)
-to [sV=5v] (0,2)
-to [R,l=$R_s$] (0,4)
-to [C,l=$C$] (4,4)
-to [short] (6,4);
-\draw (6,0) to [D] (6,4);
-\draw (6,4)
-to [short] (8,4)
-to [R,l=$R_m$] (8,2)
-to [ammeter,rotation=90] (8,0)
-to [short] (0,0);
-
-\end{circuitikz}
-\end{figure}
 \end{document}
