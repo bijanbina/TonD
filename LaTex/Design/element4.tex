@@ -1,0 +1,122 @@
+\DeclareOption{print}{\def\@cv@print{}}
+\DeclareOption*{%
+  \PassOptionsToClass{\CurrentOption}{article}%
+}
+\ProcessOptions\relax
+
+
+%%%%%%%%%%
+% Colors %
+%%%%%%%%%%
+
+\usepackage{xcolor}
+\definecolor{white}{RGB}{255,255,255}
+
+\definecolor{darkgray}{HTML}{333333}
+\definecolor{gray}{HTML}{4D4D4D}
+\definecolor{lightgray}{HTML}{999999}
+
+\definecolor{green}{HTML}{C2E15F}
+\definecolor{orange}{HTML}{FDA333}
+\definecolor{purple}{HTML}{D3A4F9}
+\definecolor{red}{HTML}{FB4485}
+\definecolor{blue}{HTML}{6CE0F1}
+
+
+\colorlet{textcolor}{gray}
+\colorlet{headercolor}{gray}
+
+%%%%%%%%%
+% Fonts %
+%%%%%%%%%
+
+\newfontfamily\bodyfont
+[Path = Fonts/,
+BoldFont=texgyreheros-bold.otf,
+ItalicFont=texgyreheros-italic.otf,
+BoldItalicFont=texgyreheros-bolditalic.otf]
+{texgyreheros-regular.otf}
+\newfontfamily\thinfont[Path = Fonts/]{Lato-Light.ttf}
+\newfontfamily\headingfont[]{texgyreheros-bold.otf}
+\newfontfamily\headerfont[Path = Fonts/]{Aspergit Bold.otf}
+\newfontfamily\menufont[Path = Fonts/]{2C295F_3_0.ttf}
+
+\defaultfontfeatures{Mapping=tex-text}
+
+%%%
+
+
+%%%%%%%%%%%%%
+% Structure %
+%%%%%%%%%%%%%
+\newcounter{colorCounter}
+\def\@sectioncolor#1#2#3{%
+  {%
+    \color{%
+      \ifcase\value{colorCounter}%
+        blue\or%
+        red\or%
+        orange\or%
+        green\else%
+        purple\fi%
+    } #1#2#3%
+  }%
+  \stepcounter{colorCounter}%
+}
+
+\renewcommand{\section}[1]{
+  \par\vspace{\parskip}
+  {%
+    \LARGE\headingfont\color{headercolor}%
+    \@sectioncolor #1%
+  }
+  \par\vspace{\parskip}
+}
+
+\renewcommand{\subsection}[1]{
+  \par\vspace{.5\parskip}%
+  {%
+  \large\headingfont\color{headercolor} #1%
+  }
+  \par\vspace{.25\parskip}%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+% List environment %
+%%%%%%%%%%%%%%%%%%%%
+
+ \setlength{\tabcolsep}{0pt}
+\newenvironment{entrylist}{%
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}ll}
+}{%
+  \end{tabular*}
+}
+ \newcommand{\entry}[4]{\headingfont\color{headercolor}
+  \bodyfont \small#1 ~~\normalsize\parbox[t]{11.5cm}{%
+    \textbf{#2}%
+    \hfill%
+    {\footnotesize\addfontfeature{Color=lightgray} #3}\\%
+    #4\vspace{\parsep}%
+  }\\}
+
+%%%%%%%%%%%%%%
+% Side block %
+%%%%%%%%%%%%%%
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+\newenvironment{aside}{%
+  \let\oldsection\section
+  \renewcommand{\section}[1]{
+    \par\vspace{\baselineskip}{\Large\headingfont\color{headercolor} ##1}
+  }
+  \begin{textblock}{3.6}(1.5, 2.17)
+  \begin{flushright}
+  \obeycr
+}{%
+  \restorecr
+  \end{flushright}
+  \end{textblock}
+  \let\section\oldsection
+}

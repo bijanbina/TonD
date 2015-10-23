@@ -1,0 +1,125 @@
+%PineGreen
+\definecolor{ao(english)}{rgb}{0.0, 0.5, 0.0}
+\definecolor{airforceblue}{rgb}{0.27, 0.47, 0.6}
+\definecolor{Headblue}{rgb}{0.25, 0.37, 0.5}
+\definecolor{backBlue}{HTML}{0084A9}
+\definecolor{backCirc}{HTML}{D4D4D4}
+\definecolor{backGray}{HTML}{545454}
+
+\newcommand{\hwMaincolor}{black}
+\newcommand{\hwRulecolor}{black}
+\def\chpcolor{airforceblue}
+\def\chpcolortxt{RoyalBlue}
+\def\sectionfont{\sffamily\LARGE}
+
+\setcounter{secnumdepth}{10}
+\newlength{\hwProblemIndent}
+\newlength{\hwProblemWidth}
+\newlength{\hwPartIndent}
+\newlength{\hwPartWidth}
+
+% Margins
+\topmargin=-0.45in
+\evensidemargin=0in
+\oddsidemargin=-0.375in
+\textwidth=7.25in
+\textheight=10.0in
+\headsep=5pt
+
+%Setup section title and margin
+\setlength{\hwProblemIndent}{20pt}
+\setlength{\hwProblemWidth}{\textwidth}
+\setlength{\hwPartIndent}{20pt}
+\setlength{\hwPartWidth}{\textwidth}
+\addtolength{\hwProblemWidth}{-\hwProblemIndent}
+\addtolength{\hwPartWidth}{-5em}
+%Section redifining
+\titleformat{\section}[block]{\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}[block]{\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{}{\thesubsubsection}{1em}{}
+\titlespacing*{\subsection} {2em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsubsection} {3em}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+%Colorful Section
+\newcommand{\hsectionstrut}{\rule{0pt}{12.5pt}}
+\newcommand{\makesectionhead}[2]{%
+  {\par\vspace{20pt}%
+   \parindent 0pt\raggedleft\sectionfont
+   \colorbox{\chpcolor}{%
+     \parbox[t]{50pt}{\color{white}\hsectionstrut\hfill#2}%
+   }%
+   \begin{minipage}[t]{\dimexpr\textwidth-50pt-2\fboxsep\relax}
+   \color{\chpcolortxt}\hsectionstrut\hspace{5pt}#1
+   \end{minipage} \\
+   \vspace{10pt}%
+  }
+}
+
+
+\linespread{1.1} % Line spacing
+%----------------------------------------------------------------------------------------
+%	Header
+%----------------------------------------------------------------------------------------
+\pagestyle{fancy}
+\lhead{\color{\hwMaincolor}\thinfont Summary} % Top left header
+\chead{\color{\hwMaincolor}\thinfont Electronic II} % Top center head
+\rhead{\color{\hwMaincolor}\thinfont TonD}% Top right header
+\lfoot{\color{\hwMaincolor}\lastxmark} % Bottom left footer
+\cfoot{} % Bottom center footer
+\rfoot{\color{\hwMaincolor}Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
+\renewcommand\headrulewidth{0.4pt} % Size of the header rule
+\renewcommand\footrulewidth{0.4pt} % Size of the footer rule
+\makeatletter
+\renewcommand\headrule{\color{\hwRulecolor} \if@fancyplain \let \headrulewidth \plainheadrulewidth \fi \hrule \@height \headrulewidth \@width \headwidth \vskip \headrulewidth }
+\renewcommand\footrule{\color{\hwRulecolor} \if@fancyplain \let \footrulewidth \plainfootrulewidth \fi \vskip -\footruleskip \vskip \footrulewidth \hrule \@width \headwidth \@height \footrulewidth \vskip \footruleskip }
+
+\makeatother
+
+\setlength\parindent{-10pt} % Removes all indentation from paragraphs
+\makeatother
+
+\setlength\parindent{-10pt} % Removes all indentation from paragraphs
+%----------------------------------------------------------------------------------------
+%	DOCUMENT STRUCTURE COMMANDS
+%	Skip this unless you know what you're doing
+%----------------------------------------------------------------------------------------
+%\pagenumbering{gobble}
+% Header and footer for when a page split occurs within a problem environment
+\newcommand{\enterProblemHeader}[1]{
+\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+}
+
+% Header and footer for when a page split occurs between problem environments
+\newcommand{\exitProblemHeader}[1]{
+\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak
+\nobreak\extramarks{#1}{}\nobreak
+}
+
+
+\newcommand{\homeworkProblemName}{}
+\newenvironment{homeworkProblem}[2]{{
+\renewcommand{\homeworkProblemName}{#1 Part} % Assign \homeworkProblemName the name of the problem
+\makesectionhead{#2}{#1}% Make a section in the document with the custom problem count
+\enterProblemHeader{\homeworkProblemName} % Header and footer within the environment
+}}{
+\exitProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+
+\newcommand{\homeworkSectionName}{}
+\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section
+\renewcommand{\homeworkSectionName}{#1} % Assign \homeworkSectionName to the name of the section from the environment argument
+\subsection{\homeworkSectionName} % Make a subsection with the custom name of the subsection
+\enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]} % Header and footer within the environment
+}{
+\enterProblemHeader{\homeworkProblemName} % Header and footer after the environment
+}
+      %
+     % %
+    % % %
+   %  %  %
+  %       %
+ %    %    %
+%%%%%%%%%%%%%
+\setcounter{section}{1}
+%\setcounter{secnumdepth}{3} % Removes default section numbers
