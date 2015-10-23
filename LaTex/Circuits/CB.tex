@@ -70,8 +70,8 @@
 
 \node  [ground] at (GND){};%GND
 \node  [ground] at (GNDB){};%GND
-\draw (mos.emitter) to[R=$R_S$] (GND) {};%GND
-\draw (Vcc) to [R=\small{$R_D$}] (Node_out) -- (mos.collector);%RD
+\draw (mos.emitter) to[R=$R_E$] (GND) {};%GND
+\draw (Vcc) to [R=\small{$R_C$}] (Node_out) -- (mos.collector);%RD
 \draw (VccB) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
 \draw (RG1) to [R=$R_2$] (GNDB);%RG2
 \draw (mos.base) -- (GATE_IN); %Short Circuit
@@ -80,9 +80,8 @@
 \swTondComment{mos.emitter}{$\frac{1}{g_m}$};
 
 %----------------Signal--------------
-\coordinate (C_IN) at  ($ (mos.emitter) + (\SmallElement,0) $);
-\coordinate (R_IN) at  ($ (C_IN) +  (\SmallElement,0) $);
-\coordinate (GND_SIG) at  ($ (R_IN)  - (0,2) $);
+\TondSigR{mos.emitter}
+
 
 \draw (GND_SIG) node [ground] {};%GND
 \draw (C_IN) to[C=$C$] (mos.emitter);%Rsig
@@ -90,5 +89,5 @@
 \draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
 
 \end{circuitikz}
-\caption{Mosfet Common Gate}
+\caption{Common Base}
 \end{figure}

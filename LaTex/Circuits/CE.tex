@@ -32,10 +32,6 @@
 \coordinate (VCC2) at (3,\VccSpace);
 \coordinate (VCC1) at  ($ (VCC2) + (\LevelSpace,0) $);
 \coordinate (GATE_IN) at  ($ (VCC2) - (0,\VccToMos) $);
-\coordinate (C_IN) at  ($ (GATE_IN) - (\SmallElement,0) $);
-\coordinate (R_IN) at  ($ (C_IN) -  (\SmallElement,0) $);
-\coordinate (GND_SIG) at  ($ (R_IN)  - (0,2) $);
-\coordinate (GND_Load) at  ($ (R_IN)  - (0,2) $);
 \coordinate (GND1) at  ($ (VCC1) + (0,-\VccSpace) $);
 \coordinate (GND2) at  ($ (VCC2) + (0,-\VccSpace) $);
 
@@ -65,9 +61,7 @@
 \swTondComment{mos.emitter}{$r_b$};
 
 %----------------Signal--------------
-\draw (GND_SIG) node [ground] {};%GND
-\draw (R_IN) to [R=$R_{sig}$] (C_IN) to[C=$C$] (GATE_IN);%Rsig
-\draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
+\TondSigL{GATE_IN}
 
 %-------------Load & Out-------------
 \coordinate (V_out)  at  ($ (mos.collector)  + (\LevelSpace,0) $);
