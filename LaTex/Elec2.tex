@@ -3,44 +3,8 @@
 \input{Design/element4}
 \input{Design/design}
 \input{Design/missions}
+\input{Design/header}
 
-
-%----------------------------------------------------------------------------------------
-%	NAME AND CLASS SECTION
-%----------------------------------------------------------------------------------------
-
-\newcommand{\confTitle}{Electronic II} % Assignment title
-\newcommand{\hmwkDueDate}{TonD Project} % Due date
-\newcommand{\Places}{by Bijan Binaee} % Teacher/lecturer
-\newcommand{\confCompany}{Summary} % Your name
-
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
-
-\title{
-\vspace{3.5in}
-\textcolor{white}{\textmd{\fontsize{40}{40}\fontspec{Asap}\textbf{\confTitle}}\\
-\vspace{3.75in}
-\small{\hmwkDueDate}\\
-\vspace{-0.1in}
-\large{\textit{\Places}}}
-}
-
-\author{\textcolor{white}{\textbf{\confCompany}}}
-\date{} % Insert date here if you want it to appear below your name
-
-%----------------------------------------------------------------------------------------
-%	Fonts
-%----------------------------------------------------------------------------------------
-
-\newfontfamily{\arabicfont}[Script=Arabic]{Koodak}
-
-%----------------------------------------------------------------------------------------
-%                                                                                       %
-%                                       START DOCUMENT                                  %
-%                                                                                       %
-%----------------------------------------------------------------------------------------
 
 \begin{document}
 \pagecolor{backGray}\afterpage{\pagecolor{backCirc}}
@@ -48,13 +12,14 @@
 \newpage
 
 \input{Circuits/TonD}
-\def \TondVcc{node [anchor=south] {$V_{CC}$} ++(-\VccLabelSpace,0) --  ++(2*\VccLabelSpace,0)}%VCC
 \ctikzset{bipoles/length=1cm}
 \ctikzset{bipoles/resistor/height=0.25}
 \ctikzset{bipoles/capacitor/height=0.4}
 \input{Circuits/CD}
+\input{Circuits/CG}
 \input{Circuits/CS}
 \input{Circuits/CE}
+\input{Circuits/CB}
 \input{Circuits/CC}
 
 \end{document}

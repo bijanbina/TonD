@@ -40,12 +40,7 @@
 \coordinate (GND2) at  ($ (VCC2) + (0,-\VccSpace) $);
 
 
-\newcommand{\neTondComment}[2]{\draw [Stealth-] (#1) ++ (+\AnSpace, 0) -- ++(0,+\AnSize) -- ++(+\AnSize,0)  node [anchor=west] {#2}};
-\newcommand{\nwTondComment}[2]{\draw [Stealth-] (#1) ++ (-\AnSpace, 0) -- ++(0,+\AnSize) -- ++(-\AnSize,0)  node [anchor=east] {#2}};
-\newcommand{\seTondComment}[2]{\draw [Stealth-] (#1) ++ (+\AnSpace, 0) -- ++(0,-\AnSize) -- ++(+\AnSize,0)  node [anchor=west] {#2}};
-\newcommand{\swTondComment}[2]{\draw [Stealth-] (#1) ++ (-\AnSpace, 0) -- ++(0,-\AnSize) -- ++(-\AnSize,0)  node [anchor=east] {#2}};
-
-\def \TondVcc{node [anchor=south] {$V_{CC}$} ++(-\VccLabelSpace,0) --  ++(2*\VccLabelSpace,0)}%VCC
+\input{Circuits/Commands}
 
 
 %-------------------------------------------------------------------------%
@@ -80,8 +75,9 @@
 
 \draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
 \node  [ground] at (GND_Load){};%GND
-\draw (mos.drain) to [C=$C$,*-] (R_Load) to[short,-o] (V_out) node [anchor=north west] {$V_o$};%Rl
+\draw (mos.drain) to [C=$C$,*-] (R_Load) to[short] (V_out) node [anchor=north west] {$V_o$};%Rl
+\TondOut {V_out};
 
 \end{circuitikz}
-\caption{Mosfet Common Drain}
+\caption{Common Source}
 \end{figure}

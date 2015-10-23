@@ -9,7 +9,7 @@
 %-------------------------------------------------------------------------%
 
 
-\def \VccSpace {6}
+\def \VccSpace {8}
 \def \LevelSpace {2.25}
 \pgfmathparse{\VccSpace-1}
 \let \VccToSig \pgfmathresult
@@ -17,35 +17,33 @@
 \ifx\MosOffset\undefined
 \def \MosOffset {0}
 \fi
-\pgfmathparse{\VccSpace/4}
+\pgfmathparse{\LevelSpace/2+0.25}
 \let \SmallElement \pgfmathresult
 
 \pgfmathparse{\VccSpace/2 + 0.5 + \MosOffset}
 \let \VccToMos \pgfmathresult %pgfmathparse used to make expression unify
 %\def \NormElement {\VccSpace/2 + 0.5}
 \def \AnSize {0.5}
+
 \pgfmathparse{\AnSize/2}
 \let \AnSpace \pgfmathresult
+
 \pgfmathparse{\AnSize - 0.1pt}
 \let \VccLabelSpace \pgfmathresult
 
-\coordinate (VCC2) at (3,\VccSpace);
-\coordinate (VCC1) at  ($ (VCC2) + (\LevelSpace,0) $);
-\coordinate (GATE_IN) at  ($ (VCC2) - (0,\VccToMos) $);
-\coordinate (C_IN) at  ($ (GATE_IN) - (\SmallElement,0) $);
-\coordinate (R_IN) at  ($ (C_IN) -  (\SmallElement,0) $);
+\let \VccLabelSpace \pgfmathresult
+
+\coordinate (VccB) at (3,\VccSpace);
+\coordinate (Vcc) at  ($ (VccB) + (\LevelSpace,0) $);
+\coordinate (GATE_IN) at  ($ (VccB) - (0,\VccToMos) $);
 \coordinate (GND_SIG) at  ($ (R_IN)  - (0,2) $);
 \coordinate (GND_Load) at  ($ (R_IN)  - (0,2) $);
-\coordinate (GND1) at  ($ (VCC1) + (0,-\VccSpace) $);
-\coordinate (GND2) at  ($ (VCC2) + (0,-\VccSpace) $);
+\coordinate (GND) at  ($ (Vcc) + (0,-\VccSpace) $);
+\coordinate (GNDB) at  ($ (VccB) + (0,-\VccSpace) $);
 
+\def \OutputOffset {1.5}
 
-\newcommand{\neTondComment}[2]{\draw [Stealth-] (#1) ++ (+\AnSpace, 0) -- ++(0,+\AnSize) -- ++(+\AnSize,0)  node [anchor=west] {#2}};
-\newcommand{\nwTondComment}[2]{\draw [Stealth-] (#1) ++ (-\AnSpace, 0) -- ++(0,+\AnSize) -- ++(-\AnSize,0)  node [anchor=east] {#2}};
-\newcommand{\seTondComment}[2]{\draw [Stealth-] (#1) ++ (+\AnSpace, 0) -- ++(0,-\AnSize) -- ++(+\AnSize,0)  node [anchor=west] {#2}};
-\newcommand{\swTondComment}[2]{\draw [Stealth-] (#1) ++ (-\AnSpace, 0) -- ++(0,-\AnSize) -- ++(-\AnSize,0)  node [anchor=east] {#2}};
-
-\def \TondVcc{node [anchor=south] {$V_{CC}$} ++(-\VccLabelSpace,0) --  ++(2*\VccLabelSpace,0)}%VCC
+\input{Circuits/Commands}
 
 
 %-------------------------------------------------------------------------%
@@ -53,35 +51,44 @@
 %-------------------------------------------------------------------------%
 
 
-\draw (VCC2) \TondVcc;%VCC
-\draw (VCC1) \TondVcc;%VCC
-\draw (VCC1) ++ (0,-\VccToMos) node[nmos](mos) {};
+\draw (VccB) \TondVcc;%VCC
+\draw (Vcc) \TondVcc;%VCC
+\draw (Vcc) ++ (0,-\VccToMos) node[nmos](mos) {};
 
-\node  [ground] at (GND1){};%GND
-\node  [ground] at (GND2){};%GND
-\draw (mos.source) to[R=$R_S$] (GND1) {};%GND
-\draw (VCC1) to [R=\small{$R_D$}] (mos.drain);%RD
-\draw (VCC2) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
-\draw (RG1) to [R=$R_2$] (GND2);%RG2
+%-------------Load & Out-------------
+\coordinate (Node_out)  at  ($ (mos.drain) + (0,\OutputOffset) $);
+\coordinate (V_out)  at  ($ (Node_out)  + (\LevelSpace,0) $);
+\coordinate (R_Load)  at  ($ (V_out) - (1,0) $);
+\coordinate (GND_Load) at  ($ (R_Load) - (0,2) $);
+
+\draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
+\node  [ground] at (GND_Load){};%GND
+\draw (Node_out) to [C=$C$,*-] (R_Load) to[short] (V_out) node [anchor=north west] {$V_o$};%Rl
+\TondOut {V_out};
+
+%---------------Circuit---------------
+
+\node  [ground] at (GND){};%GND
+\node  [ground] at (GNDB){};%GND
+\draw (mos.source) to[R=$R_S$] (GND) {};%GND
+\draw (Vcc) to [R=\small{$R_D$}] (Node_out) -- (mos.drain);%RD
+\draw (VccB) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
+\draw (RG1) to [R=$R_2$] (GNDB);%RG2
 \draw (mos.gate) -- (GATE_IN); %Short Circuit
 %(mos.source) node[anchor=north] {S};
 \nwTondComment{mos.drain}{$r_o$};
 \swTondComment{mos.source}{$\frac{1}{g_m}$};
 
 %----------------Signal--------------
+\coordinate (C_IN) at  ($ (mos.source) + (\SmallElement,0) $);
+\coordinate (R_IN) at  ($ (C_IN) +  (\SmallElement,0) $);
+\coordinate (GND_SIG) at  ($ (R_IN)  - (0,2) $);
+
 \draw (GND_SIG) node [ground] {};%GND
-\draw (R_IN) to [R=$R_{sig}$] (C_IN) to[C=$C$] (GATE_IN);%Rsig
+\draw (C_IN) to[C=$C$] (mos.source);%Rsig
+\draw (R_IN) to [R=$R_{sig}$] ($(C_IN) -  (0.4,0) $);%Rsig
 \draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
 
-%-------------Load & Out-------------
-\coordinate (V_out)  at  ($ (mos.drain)  + (\LevelSpace,0) $);
-\coordinate (R_Load)  at  ($ (mos.drain)  + (\LevelSpace,0) - (1,0) $);
-\coordinate (GND_Load) at  ($ (R_Load) - (0,2) $);
-
-\draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
-\node  [ground] at (GND_Load){};%GND
-\draw (mos.drain) to [C=$C$,*-] (R_Load) to[short,-o] (V_out) node [anchor=north west] {$V_o$};%Rl
-
 \end{circuitikz}
-\caption{Mosfet Common Drain}
+\caption{Mosfet Common Gate}
 \end{figure}
