@@ -34,8 +34,6 @@
 \coordinate (VccB) at (3,\VccSpace);
 \coordinate (Vcc) at  ($ (VccB) + (\LevelSpace,0) $);
 \coordinate (GATE_IN) at  ($ (VccB) - (0,\VccToMos) $);
-\coordinate (GND_SIG) at  ($ (R_IN)  - (0,2) $);
-\coordinate (GND_Load) at  ($ (R_IN)  - (0,2) $);
 \coordinate (GND) at  ($ (Vcc) + (0,-\VccSpace) $);
 \coordinate (GNDB) at  ($ (VccB) + (0,-\VccSpace) $);
 
@@ -80,10 +78,5 @@
 %----------------Signal--------------
 \TondSigR{mos.emitter}
 
-
-\draw (GND_SIG) node [ground] {};%GND
-\draw (C_IN) to[C=$C$] (mos.emitter);%Rsig
-\draw (R_IN) to [R=$R_{sig}$] ($(C_IN) -  (0.4,0) $);%Rsig
-\draw (GND_SIG) to [sV=$V_{in}$,rotation=10] (R_IN);%Signal
 
 \end{circuitikz}

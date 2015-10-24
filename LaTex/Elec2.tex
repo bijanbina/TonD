@@ -3,8 +3,18 @@
 \input{Design/element4}
 \input{Design/design}
 \input{Design/header}
+\usepackage{amsmath}%
+\usepackage{amssymb}
 \usepackage{lipsum}  
+\usetikzlibrary{intersections}
+
+\DeclareMathSizes{10}{10}{6}{6}
 \begin{document}
+\input{Circuits/TonD}
+\ctikzset{bipoles/length=1cm}
+\ctikzset{bipoles/resistor/height=0.25}
+\ctikzset{bipoles/capacitor/height=0.4}
+
 \pagecolor{backGray}\afterpage{\pagecolor{backCirc}}
 \maketitle
 
@@ -14,14 +24,36 @@
 \renewcommand{\Places}{#1} % Teacher/lecturer
 }
 
+\newcommand{\myfrac}[3][3pt]{\frac{\raisebox{10pt}{#2}}{\raisebox{-10pt}{#3}}};
 
 \newpage
-\section{Bipolar Transistor}
-\TonDdef{Common Source} % Teacher/lecturer
-\input{Circuits/TonD}
-\ctikzset{bipoles/length=1cm}
-\ctikzset{bipoles/resistor/height=0.25}
-\ctikzset{bipoles/capacitor/height=0.4}
+\TonDdef{Common Emiiter} % Teacher/lecturer
+\section{$\blacksquare $ Bipolar Transistor}
+\input{Analysis/CE}
+
+
+
+\newpage
+\TonDdef{Common Base} % Teacher/lecturer
+\setlength{\parindent}{0.5cm} % Default is 15pt.
+\lipsum[1-4]
+\setlength{\parindent}{0.0cm} 
+\begin{minipage}[b]{.5\textwidth}
+\lipsum[7]
+\lipsum[66]
+\end{minipage}%
+\noindent
+\setlength{\parindent}{0.0cm} 
+\hspace*{-\parindent}%
+\begin{minipage}[b]{.5\textwidth}
+\centering
+\input{Circuits/CB}
+\end{minipage}%
+
+
+
+\newpage
+\TonDdef{Common Collector} % Teacher/lecturer
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \lipsum[1-4]
 \setlength{\parindent}{0.0cm} 
@@ -34,8 +66,25 @@
 \hspace*{-\parindent}%
 \begin{minipage}[b]{.5\textwidth}
 \raggedleft
+\input{Circuits/CC}
+\end{minipage}%
+
+\newpage
+\TonDdef{Common Source} % Teacher/lecturer
+\setlength{\parindent}{0.5cm} % Default is 15pt.
+\lipsum[1-4]
+\setlength{\parindent}{0.0cm} 
+\begin{minipage}[b]{.5\textwidth}
+\input{Analysis/CS}
+\lipsum[7]
+\lipsum[66]
+\end{minipage}%
+\noindent
+\setlength{\parindent}{0.0cm} 
+\hspace*{-\parindent}%
+\begin{minipage}[b]{.5\textwidth}
+\raggedleft
 \input{Circuits/CS}
-%\makesectionhead{Mosfet}{Common source}
 \end{minipage}%
 
 
@@ -78,58 +127,5 @@
 
 
 
-\newpage
-\TonDdef{Common Emiiter} % Teacher/lecturer
-\setlength{\parindent}{0.5cm} % Default is 15pt.
-\lipsum[1-4]
-\setlength{\parindent}{0.0cm} 
-\begin{minipage}[b]{.5\textwidth}
-\input{Analysis/CE}
-\lipsum[7]
-\end{minipage}%
-\noindent
-\setlength{\parindent}{0.0cm} 
-\hspace*{-\parindent}%
-\begin{minipage}[b]{.5\textwidth}
-\raggedleft
-\input{Circuits/CE}
-\end{minipage}%
 
-
-
-\newpage
-\TonDdef{Common Base} % Teacher/lecturer
-\setlength{\parindent}{0.5cm} % Default is 15pt.
-\lipsum[1-4]
-\setlength{\parindent}{0.0cm} 
-\begin{minipage}[b]{.5\textwidth}
-\lipsum[7]
-\lipsum[66]
-\end{minipage}%
-\noindent
-\setlength{\parindent}{0.0cm} 
-\hspace*{-\parindent}%
-\begin{minipage}[b]{.5\textwidth}
-\centering
-\input{Circuits/CB}
-\end{minipage}%
-
-
-
-\newpage
-\TonDdef{Common Collector} % Teacher/lecturer
-\setlength{\parindent}{0.5cm} % Default is 15pt.
-\lipsum[1-4]
-\setlength{\parindent}{0.0cm} 
-\begin{minipage}[b]{.5\textwidth}
-\lipsum[7]
-\lipsum[66]
-\end{minipage}%
-\noindent
-\setlength{\parindent}{0.0cm} 
-\hspace*{-\parindent}%
-\begin{minipage}[b]{.5\textwidth}
-\raggedleft
-\input{Circuits/CC}
-\end{minipage}%
 \end{document}
