@@ -54,10 +54,6 @@
 \draw (RG1) to [R=$R_2$] (GND2);%RG2
 \draw (mos.base) -- (GATE_IN); %Short Circuit
 
-%-------------Annotate---------------
-\nwTondComment{mos.collector}{$r_o$};
-\swTondComment{mos.emitter}{$r_b$};
-
 %----------------Signal--------------
 \TondSigL{GATE_IN}
 
@@ -70,5 +66,10 @@
 \node  [ground] at (GND_Load){};%GND
 \draw (mos.collector) to [C=$C$,*-] (R_Load) to[short] (V_out) node [anchor=north west] {$V_o$};%Rl
 \TondOut {V_out};
+
+%-------------Annotate---------------
+\nwTondComment{mos.collector}{$r_o$};
+\swTondComment{mos.emitter}{$r_b$};
+\neTondCommentH{R_Load}{$R_o$};
 
 \end{circuitikz}

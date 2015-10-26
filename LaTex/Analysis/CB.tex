@@ -1,1 +1,45 @@
+\setlength{\parindent}{0.5cm} % Default is 15pt.
+\lipsum[1-3]
+\setlength{\parindent}{0.0cm} 
+\begin{minipage}[b]{.5\textwidth}
+\lipsum[66]
+\begin{tikzpicture}
+\tikzset{>=latex}
+%lines
+\draw [firstLine, thick,name path=line 1] (-1.5,4) node [anchor=west] {~~\footnotesize DC Load Line} -- (3.5,0);
+\draw [secondLine, thick,name path=line 2] (-1.5,3) -- (5.5,0) coordinate (D2) ++ (0,0.5) node [anchor=south] {\footnotesize AC Load Line};
 
+%curve
+\draw[thick, name path=VBE] (-1.5,0) to [out=85,in=190] ++ (1.5,3);% to [out=5,in=180] (7,3.2);
+\draw[thick]  (0,3) -- +(1:5.5cm);
+
+%Coordinate
+\draw [<->, thick] (0,5) node [anchor=south] {$I_{C}$} -- (0,0) -- (6.5,0) node [anchor=north west] {$V_{CB}$};
+\draw [thick]  (0,0) -- (-2,0);
+
+%Intersections
+%\draw [name intersections={of=line 1 and line 2}] [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(-\x1,0) coordinate (Icq) node [anchor=east] {$I_{CQ}$};
+%\draw [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(0,-\y1) coordinate (Vceq) node [anchor=north] {$V_{CEQ}$};
+\draw [name intersections={of=line 1 and line 2}] [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(-\x1,0) coordinate (Icq);
+\draw [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(0,-\y1) coordinate (Vceq);
+\fill (intersection-1) circle (1.5pt) node [anchor=south west] {Q};
+
+\def \Vsat {-0.5}
+\path [name path=A--B] (\Vsat,0) -| (\Vsat,3);
+\path [name intersections={of=A--B and VBE}];
+\draw [help lines]  (intersection-1) -- (\Vsat,0);
+\node [anchor=north east, help lines] at (0.\Vsat,0) {$V_{sat}$};
+
+%Annotate
+\Cote{(\Vsat,0)}{(Vceq)}{${\Delta}_1$}
+\Cote{(Vceq)}{(D2)}{${\Delta}_2$}
+
+\end{tikzpicture}\\
+\end{minipage}%
+\noindent
+\setlength{\parindent}{0.0cm} 
+\hspace*{-\parindent}%
+\begin{minipage}[b]{.5\textwidth}
+\centering
+\input{Circuits/CB}
+\end{minipage}%
