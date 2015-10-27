@@ -1,10 +1,10 @@
 %\thefontsize 
 $$ g_m = \cfrac{\partial I_c}{\partial V_{BE}} = \cfrac{I_c}{V_t} ~~,~~ r_\pi = \cfrac{\beta}{g_m} ~~ , ~~ I_C = I_S ( exp (\dfrac{V_{BE}}{V_T}) + 1)~~ , ~~ h_{oe} = output~admittance ~~ , ~~ h_{fe} = \beta $$
 $$AC~Line~Slope:  -g_m ( R_C || R_L )  ~~ , ~~ DC~Load~Line :  V_{CC} - R_C I_{CQ} - V_{CEQ} = 0 $$
-$$ A_V = -\dfrac{R_C || R_L}{g_m^{-1} + R_E} ~~ , ~~ r_o = \frac{1}{h_{oe}} = \frac{V_A}{I_C} $$
+$$ A_V = -\dfrac{R_C || R_L}{g_m^{-1} + R_E} ~~ , ~~ r_o = \frac{1}{h_{oe}} = \frac{V_A}{I_C} ~~ , ~~ {\Delta}_1 = V_{CEQ} - V_{sat} ~~ , ~~ I_{CEQ} - \frac{{\Delta}_2}{R_{ac}} = 0 $$
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \par
-Common x is an amplifing configuration which the node x, is isolated from both input source and output node. To compute swing voltage this node and the output node are plotted versus $I_C$. This is done to independ the swing calculation from input alternate. So as said in Common Source configuration this is $I_D$ versus $V_DS$. After writing DC load line from mentioned nodes. We determine AC Line, Slope. So we define AC Line. AC Line is a Line with "AC Line Slope" Slope and pass from Quiscent point. so for common emitter configuration it is $ I_C = - g_m ( R_C || R_L ) V_{CE} $
+Common x is an amplifing configuration which the node x, is isolated from both input source and output node. To compute swing voltage this node and the output node are plotted versus $I_C$. This is done to independ the swing calculation from input alternate. So as said in Common Source configuration this is $I_D$ versus $V_DS$. After writing DC load line from mentioned nodes. We determine AC Line, Slope. So we define AC Line. AC Line is a Line with "AC Line Slope" Slope and pass from Quiscent point. so for common emitter configuration it is $ I_C = - ( R_C || R_L )^{-1} V_{CE} $
 \lipsum[1-2]
 \setlength{\parindent}{0.0cm} 
 $ R_o = (r_\pi ~||~ R_E) + ( 1 + g_m (r_\pi ~||~ R_E) )r_o$ or \\
