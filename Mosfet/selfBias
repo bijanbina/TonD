@@ -8,11 +8,11 @@
 Vs	Vdd	gnd	DC	5
 R1	source	gnd		1K
 .MODEL	MOSB	NMOS	level=1	KP=200U	VTO=0.4
-M1	drain	drain	source	drain	MOSB L=0.1U W=10U
+M1	drain	drain	source	gnd	MOSB L=0.1U W=10U
 V1	Vdd	drain	DC	0
 
 .control
-	DC	Vs	-20	20	0.05
+	DC	Vs	0	2	0.05
 	plot	V(source)
 	plot	V(Vdd) - V(source)
 	plot	I(V1)

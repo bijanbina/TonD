@@ -1,81 +1,45 @@
-\begin{circuitikz}
-\tikzstyle{every node}=[font=\small]
+\setlength{\parindent}{0.5cm} % Default is 15pt.
+\lipsum[1-3]
+\setlength{\parindent}{0.0cm} 
+\begin{minipage}[b]{.5\textwidth}
+\lipsum[66]
+\begin{tikzpicture}
+\tikzset{>=latex}
+%lines
+\draw [firstLine, thick,name path=line 1] (-1.5,4) node [anchor=west] {~~\footnotesize DC Load Line} -- (3.5,0);
+\draw [secondLine, thick,name path=line 2] (-1.5,3) -- (5.5,0) coordinate (D2) ++ (0,0.5) node [anchor=south] {\footnotesize AC Load Line};
 
+%curve
+\draw[thick, name path=VBE] (-1.5,0) to [out=85,in=190] ++ (1.5,3);% to [out=5,in=180] (7,3.2);
+\draw[thick]  (0,3) -- +(1:5.5cm);
 
-%-------------------------------------------------------------------------%
-%---------------------------------Parameters------------------------------%
-%-------------------------------------------------------------------------%
+%Coordinate
+\draw [<->, thick] (0,5) node [anchor=south] {$I_{D}$} -- (0,0) -- (6.5,0) node [anchor=north west] {$V_{DG}$};
+\draw [thick]  (0,0) -- (-2,0);
 
+%Intersections
+%\draw [name intersections={of=line 1 and line 2}] [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(-\x1,0) coordinate (Icq) node [anchor=east] {$I_{CQ}$};
+%\draw [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(0,-\y1) coordinate (Vceq) node [anchor=north] {$V_{CEQ}$};
+\draw [name intersections={of=line 1 and line 2}] [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(-\x1,0) coordinate (Icq);
+\draw [help lines]  let \p1 = (intersection-1) in (intersection-1) -- ++(0,-\y1) coordinate (Vceq);
+\fill (intersection-1) circle (1.5pt) node [anchor=south west] {Q};
 
-\def \VccSpace {8}
-\def \LevelSpace {2.25}
-\pgfmathparse{\VccSpace-1}
-\let \VccToSig \pgfmathresult
+\def \Vsat {-0.5}
+\path [name path=A--B] (\Vsat,0) -| (\Vsat,3);
+\path [name intersections={of=A--B and VBE}];
+\draw [help lines]  (intersection-1) -- (\Vsat,0);
+\node [anchor=north east, help lines] at (0.\Vsat,0) {$V_{ov}$};
 
-\ifx\MosOffset\undefined
-\def \MosOffset {0}
-\fi
-\pgfmathparse{\LevelSpace/2+0.25}
-\let \SmallElement \pgfmathresult
+%Annotate
+\Cote{(\Vsat,0)}{(Vceq)}{${\Delta}_1$}
+\Cote{(Vceq)}{(D2)}{${\Delta}_2$}
 
-\pgfmathparse{\VccSpace/2 + 0.5 + \MosOffset}
-\let \VccToMos \pgfmathresult %pgfmathparse used to make expression unify
-%\def \NormElement {\VccSpace/2 + 0.5}
-\def \AnSize {0.5}
-
-\pgfmathparse{\AnSize/2}
-\let \AnSpace \pgfmathresult
-
-\pgfmathparse{\AnSize - 0.1pt}
-\let \VccLabelSpace \pgfmathresult
-
-\let \VccLabelSpace \pgfmathresult
-
-\coordinate (VccB) at (3,\VccSpace);
-\coordinate (Vcc) at  ($ (VccB) + (\LevelSpace,0) $);
-\coordinate (GATE_IN) at  ($ (VccB) - (0,\VccToMos) $);
-\coordinate (GND) at  ($ (Vcc) + (0,-\VccSpace) $);
-\coordinate (GNDB) at  ($ (VccB) + (0,-\VccSpace) $);
-
-\def \OutputOffset {1.5}
-
-\input{Circuits/Commands}
-
-
-%-------------------------------------------------------------------------%
-%-----------------------------------Circuit-------------------------------%
-%-------------------------------------------------------------------------%
-
-
-\draw (VccB) \TondVcc;%VCC
-\draw (Vcc) \TondVcc;%VCC
-\draw (Vcc) ++ (0,-\VccToMos) node[nmos](mos) {};
-
-%-------------Load & Out-------------
-\coordinate (Node_out)  at  ($ (mos.drain) + (0,\OutputOffset) $);
-\coordinate (V_out)  at  ($ (Node_out)  + (\LevelSpace,0) $);
-\coordinate (R_Load)  at  ($ (V_out) - (1,0) $);
-\coordinate (GND_Load) at  ($ (R_Load) - (0,2) $);
-
-\draw (R_Load) to [R=$R_{l}$] (GND_Load);%Rl
-\node  [ground] at (GND_Load){};%GND
-\draw (Node_out) to [C=$C$,*-] (R_Load) to[short] (V_out) node [anchor=north west] {$V_o$};%Rl
-\TondOut {V_out};
-
-%---------------Circuit---------------
-
-\node  [ground] at (GND){};%GND
-\node  [ground] at (GNDB){};%GND
-\draw (mos.source) to[R=$R_S$] (GND) {};%GND
-\draw (Vcc) to [R=\small{$R_D$}] (Node_out) -- (mos.drain);%RD
-\draw (VccB) to [R=$R_1$] (GATE_IN) node(RG1) {};%RG1
-\draw (RG1) to [R=$R_2$] (GNDB);%RG2
-\draw (mos.gate) -- (GATE_IN); %Short Circuit
-%(mos.source) node[anchor=north] {S};
-\nwTondComment{mos.drain}{$r_o$};
-\swTondComment{mos.source}{$\frac{1}{g_m}$};
-
-%----------------Signal--------------
-\TondSigR{mos.source}
-
-\end{circuitikz}
+\end{tikzpicture}\\
+\end{minipage}%
+\noindent
+\setlength{\parindent}{0.0cm} 
+\hspace*{-\parindent}%
+\begin{minipage}[b]{.5\textwidth}
+\centering
+\input{Circuits/CG}
+\end{minipage}%
