@@ -12,7 +12,7 @@ M1	drain	drain	source	gnd	MOSB L=0.1U W=10U
 V1	Vdd	drain	DC	0
 
 .control
-	DC	Vs	0	2	0.05
+	DC	Vs	0	10	0.05
 	plot	V(source)
 	plot	V(Vdd) - V(source)
 	plot	I(V1)
