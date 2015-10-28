@@ -4,13 +4,15 @@
 \newcommand{\swTondComment}[2]{\draw [Stealth-] (#1) ++ (-\AnSpace, 0) -- ++(0,-\AnSize) -- ++(-\AnSize,0)  node [anchor=east] {#2}};
 
 \newcommand{\neTondCommentH}[2]{\draw [Stealth-] (#1) ++ (0, +\AnSpace) -- ++(+\AnSize,0) -- ++(0,+\AnSize)  node [anchor=south] {#2}};
-\newcommand{\nwTondCommentH}[2]{\draw [Stealth-] (#1) ++ (-\AnSpace, 0) -- ++(0,+\AnSize) -- ++(-\AnSize,0)  node [anchor=east] {#2}};
-\newcommand{\seTondCommentH}[2]{\draw [Stealth-] (#1) ++ (+\AnSpace, 0) -- ++(0,-\AnSize) -- ++(+\AnSize,0)  node [anchor=west] {#2}};
-\newcommand{\swTondCommentH}[2]{\draw [Stealth-] (#1) ++ (-\AnSpace, 0) -- ++(0,-\AnSize) -- ++(-\AnSize,0)  node [anchor=east] {#2}};
+\newcommand{\nwTondCommentH}[2]{\draw [Stealth-] (#1) ++ (0, +\AnSpace) -- ++(-\AnSize,0) -- ++(0,+\AnSize)  node [anchor=south] {#2}};
+\newcommand{\seTondCommentH}[2]{\draw [Stealth-] (#1) ++ (0, -\AnSpace) -- ++(+\AnSize,0) -- ++(0,-\AnSize)  node [anchor=north] {#2}};
+\newcommand{\swTondCommentH}[2]{\draw [Stealth-] (#1) ++ (0, -\AnSpace) -- ++(-\AnSize,0) -- ++(0,-\AnSize)  node [anchor=north] {#2}};
 %\newcommand{\myfrac}[3][0pt]{\genfrac{}{}{}{}{\raisebox{#1}{$#2$}}{\raisebox{-#1}{$#3$}}}
 
 \def \TondVcc{node [anchor=south] {$V_{CC}$} ++(-\VccLabelSpace,0) --  ++(2*\VccLabelSpace,0)}%VCC
 \newcommand{\TondOut}[1]{\node [shape=circle,anchor=west,draw,minimum size=0.1cm,inner sep=0pt] at (#1) {}};
+\newcommand{\TondOutE}[1]{\node [shape=circle,anchor=east,draw,minimum size=0.1cm,inner sep=0pt] at (#1) {}};
+
 %Draw input signal generator on right of node
 \newcommand{\TondSigR}[1]{
 \coordinate (C_IN) at  ($ (#1) + (\SmallElement,0) $);

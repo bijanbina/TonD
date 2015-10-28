@@ -1,0 +1,71 @@
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\small]
+
+
+%-------------------------------------------------------------------------%
+%---------------------------------Parameters------------------------------%
+%-------------------------------------------------------------------------%
+
+
+\def \BiasSpace {1}
+\def \LevelSpace {5}
+\def \MosBase {0}
+% \pgfmathparse{\VccSpace-1}
+% \let \VccToSig \pgfmathresult
+% 
+% \ifx\MosOffset\undefined
+% \def \MosOffset {0}
+% \fi
+% \pgfmathparse{\VccSpace/4}
+% \let \SmallElement \pgfmathresult
+% 
+% \pgfmathparse{\VccSpace/2 + 0.5 + \MosOffset}
+% \let \VccToMos \pgfmathresult %pgfmathparse used to make expression unify
+% %\def \NormElement {\VccSpace/2 + 0.5}
+\def \AnSize {0.5}
+\pgfmathparse{\AnSize/2}
+\let \AnSpace \pgfmathresult
+% \pgfmathparse{\AnSize - 0.1pt}
+% \let \VccLabelSpace \pgfmathresult
+
+\coordinate (NMOS1) at (0,\LevelSpace);
+\coordinate (PMOS1) at ($ (NMOS1) + (\LevelSpace,0) $);
+
+
+\input{Circuits/Commands}
+
+
+%-------------------------------------------------------------------------%
+%-----------------------------------Circuit-------------------------------%
+%-------------------------------------------------------------------------%
+
+
+\draw (NMOS1) node[nmos](mos1) {};
+\draw (mos1.gate) to [short,*-] ++ ( 0, 0.77 ) to [short,-*] (mos1.drain);
+\draw (mos1.drain)  -- ++ ( 0, 0.25 ) coordinate (anot1);
+\draw (PMOS1) node[pmos](mos2) {};
+\draw (mos2.gate) to [short,*-] ++ ( 0, -0.77 ) to [short,-*] (mos2.drain);
+\draw (mos2.drain)  -- ++ ( 0, -0.25 ) coordinate (anot2);
+
+
+%----------------Bias----------------
+\coordinate (Bias1) at ($ (mos1.gate) + (-\BiasSpace,0) $);
+\coordinate (Bias2) at ($ (mos2.gate) + (-\BiasSpace,0) $);
+
+
+\draw (mos1.gate) to node [anchor=north east] {$V_{bias}$} (Bias1);%Rl
+\TondOutE {Bias1};
+
+\draw (mos2.gate) to node [anchor=north east] {$V_{bias}$} (Bias2);%Rl
+\TondOutE {Bias2};
+
+%-------------Annotate---------------
+\nwTondComment{anot1}{$\frac{1}{g_m}$};
+\swTondComment{mos1.source}{$\frac{1}{g_m}$};
+\nwTondCommentH{$ (mos1.gate) + (-0.5,0) $}{$\frac{1}{g_m}$};
+
+\nwTondComment{mos2.source}{$\frac{1}{g_m}$};
+\swTondComment{anot2}{$\frac{1}{g_m}$};
+\nwTondCommentH{$ (mos2.gate) + (-0.5,0) $}{$\frac{1}{g_m}$};
+
+\end{circuitikz}

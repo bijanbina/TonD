@@ -4,18 +4,19 @@ $$ k = {\mu}_n C_{ox} \frac{W}{L} ~~ , ~~ V_{ov} = V_{GS} - V_{TH} ~~, ~~  Satur
 PMOS
 $$ k^{`}_p = {\mu}_p C_{ox} \frac{W}{L} ~~, ~~ I_D = \frac{k}{2} (V_{SG} - |V_{TH}|)^2 ~~,~~ 
 \lambda = \frac{1}{V_A} ~~, ~~ r_o = \frac{\partial V_{DS}}{\partial I_{DS}} = \frac{1}{\lambda  I_D} = \frac{V_A}{I_D}$$
-
+\par Common Source
 $$ g_m = \frac{\partial I_D}{\partial V_{GS}} = k V_{ov} = \frac{2 I_D}{V_{ov}} =  \sqrt{2 k I_D}  $$
 $$ A_V = -\dfrac{R_D || R_L}{g_m^{-1} + R_S} ~~ , ~~  {\Delta}_1 = V_{DSQ} - V_{ov} ~~ , ~~ I_{DQ} - \frac{{\Delta}_2}{R_{ac}} = 0 $$
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \par
 Common x is an amplifing configuration which the node x, is isolated from both input source and output node. To compute swing voltage this node and the output node are plotted versus $I_C$. This is done to independ the swing calculation from input alternate. So as said in Common Source configuration this is $I_D$ versus $V_DS$. After writing DC load line from mentioned nodes. We determine AC Line, Slope. So we define AC Line. AC Line is a Line with "AC Line Slope" Slope and pass from Quiscent point. so for common emitter configuration it is $ I_C = - ( R_D || R_L )^{-1} V_{CE} $
-\lipsum[1-2]
 \setlength{\parindent}{0.0cm} 
+\begin{minipage}[b]{.5\textwidth}
 $ R_o = (r_\pi ~||~ R_E) + ( 1 + g_m (r_\pi ~||~ R_E) )r_o$ or \\
 $ R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
 $ if ( g_m R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
-\begin{minipage}[t]{.5\textwidth}
+\par 
+\input{Circuits/MOS_Diode}
 \begin{tikzpicture}
 \tikzset{>=latex}
 %lines
@@ -48,7 +49,11 @@ $ if ( g_m R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
 \setlength{\parindent}{0.0cm} 
 \hspace*{-\parindent}%
 \begin{minipage}[b]{.5\textwidth}
+\centering
+\input{Circuits/MOS}
+~\par ~\\ ~\\
+{
 \raggedleft
-\input{Circuits/CS}
+\input{Circuits/CS}}
 %\makesectionhead{Mosfet}{Common source}
 \end{minipage}%
