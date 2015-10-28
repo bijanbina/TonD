@@ -1,10 +1,14 @@
-$$ A_V = \dfrac{R_D || r_o}{g_m^{-1} + R_D||r_o} ~~ , ~~  {\Delta}_1 = V_{DSQ} - V_{ov} ~~ , ~~ I_{DQ} - \frac{{\Delta}_2}{R_{ac}} = 0 $$
+$$ A_V = \dfrac{R_S || r_o}{g_m^{-1} + R_S||r_o} ~~ , ~~  {\Delta}_1 = V_{DSQ} - V_{ov} ~~ , ~~ I_{DQ} - \frac{{\Delta}_2}{R_{ac}} = 0 $$
 \setlength{\parindent}{0.5cm} % Default is 15pt.
+In Common Drain, $R_D$ Is not used as it has very small impact on output gain, but it take down DC bias. so it not used practically
 \lipsum[1-4]
+\lipsum[7]
 \setlength{\parindent}{0.0cm} 
 \begin{minipage}[b]{.5\textwidth}
-\lipsum[7]
-\lipsum[66]
+$$ R_{out} = \frac{1}{g_m} r_{o1} r_{o2} $$
+\par ~\\
+\centering
+\input{Circuits/Cascode}
 \end{minipage}%
 \noindent
 \setlength{\parindent}{0.0cm} 
@@ -12,3 +16,4 @@ $$ A_V = \dfrac{R_D || r_o}{g_m^{-1} + R_D||r_o} ~~ , ~~  {\Delta}_1 = V_{DSQ} -
 \begin{minipage}[b]{.5\textwidth}
 \raggedleft
 \input{Circuits/CD}
+\end{minipage}%

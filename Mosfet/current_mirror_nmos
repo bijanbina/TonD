@@ -1,0 +1,18 @@
+.TITLE Current Mirror CS
+
+Vs	vdd	gnd	DC=8
+IRef	G2	gnd	1m
+Vin	gate	gnd	DC=5
+M1	drain	gate	source	gnd	NMOSB
+M2	drain	G2	vdd	vdd	PMOSB
+M3	vdd	vdd	G2	gnd	NMOSB
+.MODEL	NMOSB	NMOS	level=1	KP=200U	VTO=0.4
+.MODEL	PMOSB	PMOS	level=1	KP=100U	VTO=-0.4
+Vamp	source	gnd	DC	0
+
+.control
+	DC	Vin	0	8	0.05	IRef	1m	2m	0.5m
+	plot	V(drain)
+	plot	I(Vamp)
+.endc
+.end
