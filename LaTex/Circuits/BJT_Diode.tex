@@ -1,0 +1,71 @@
+\begin{circuitikz}
+\tikzstyle{every node}=[font=\small]
+
+
+%-------------------------------------------------------------------------%
+%---------------------------------Parameters------------------------------%
+%-------------------------------------------------------------------------%
+
+
+\def \BiasSpace {1}
+\def \LevelSpace {5}
+\def \MosBase {0}
+% \pgfmathparse{\VccSpace-1}
+% \let \VccToSig \pgfmathresult
+% 
+% \ifx\MosOffset\undefined
+% \def \MosOffset {0}
+% \fi
+% \pgfmathparse{\VccSpace/4}
+% \let \SmallElement \pgfmathresult
+% 
+% \pgfmathparse{\VccSpace/2 + 0.5 + \MosOffset}
+% \let \VccToMos \pgfmathresult %pgfmathparse used to make expression unify
+% %\def \NormElement {\VccSpace/2 + 0.5}
+\def \AnSize {0.5}
+\pgfmathparse{\AnSize/2}
+\let \AnSpace \pgfmathresult
+% \pgfmathparse{\AnSize - 0.1pt}
+% \let \VccLabelSpace \pgfmathresult
+
+\coordinate (NPN1) at (0,\LevelSpace);
+\coordinate (PNP1) at ($ (NPN1) + (\LevelSpace,0) $);
+
+
+\input{Circuits/Commands}
+
+
+%-------------------------------------------------------------------------%
+%-----------------------------------Circuit-------------------------------%
+%-------------------------------------------------------------------------%
+
+
+\draw (NPN1) node[npn](bjt1) {};
+\draw (bjt1.base) to [short,*-] ++ ( 0, 0.77 ) to [short,-*] (bjt1.collector);
+\draw (bjt1.collector)  -- ++ ( 0, 0.25 ) coordinate (anot1);
+\draw (PNP1) node[pnp](bjt2) {};
+\draw (bjt2.base) to [short,*-] ++ ( 0, -0.77 ) to [short,-*] (bjt2.collector);
+\draw (bjt2.collector)  -- ++ ( 0, -0.25 ) coordinate (anot2);
+
+
+%----------------Bias----------------
+\coordinate (Bias1) at ($ (bjt1.base) + (-\BiasSpace,0) $);
+\coordinate (Bias2) at ($ (bjt2.base) + (-\BiasSpace,0) $);
+
+
+\draw (bjt1.base) to node [anchor=north east] {$V_{bias}$} (Bias1);%Rl
+\TondOutE {Bias1};
+
+\draw (bjt2.base) to node [anchor=north east] {$V_{bias}$} (Bias2);%Rl
+\TondOutE {Bias2};
+
+%-------------Annotate---------------
+\nwTondComment{anot1}{$\frac{1}{g_m}$};
+\swTondComment{bjt1.emitter}{$\frac{1}{g_m}$};
+\nwTondCommentH{$ (bjt1.base) + (-0.5,0) $}{$\frac{1}{g_m}$};
+
+\nwTondComment{bjt2.emitter}{$\frac{1}{g_m}$};
+\swTondComment{anot2}{$\frac{1}{g_m}$};
+\nwTondCommentH{$ (bjt2.base) + (-0.5,0) $}{$\frac{1}{g_m}$};
+
+\end{circuitikz}

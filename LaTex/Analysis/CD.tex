@@ -1,11 +1,18 @@
 $$ A_V = \dfrac{R_S || r_o}{g_m^{-1} + R_S||r_o} ~~ , ~~  {\Delta}_1 = V_{DSQ} - V_{ov} ~~ , ~~ I_{DQ} - \frac{{\Delta}_2}{R_{ac}} = 0 $$
+\par
+Wilson
+$$ 3 Mosafet ~~ , ~~ \frac{I_C}{I_{Ref}} = \frac{1}{1 + 2 \beta ^ {-2}} $$
+\par
+Widlar
+$$ 3 Mosafet ~~ , ~~ \frac{I_C}{I_{Ref}} = \frac{1}{1 + 2 \beta ^ {-2}} $$
+\par
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 In Common Drain, $R_D$ Is not used as it has very small impact on output gain, but it take down DC bias. so it not used practically
 \lipsum[1-4]
-\lipsum[7]
 \setlength{\parindent}{0.0cm} 
 \begin{minipage}[b]{.5\textwidth}
-$$ R_{out} = \frac{1}{g_m} r_{o1} r_{o2} $$
+$$ R_{out} = r_{o1} + r_{o2} + g_{m2} r_{o1} r_{o2} \approx g_{m2} r_{o1} r_{o2} $$
+$$ A_V = g_{m1} R_{out} \approx g_{m1} g_{m2} r_{o1} r_{o2}$$
 \par ~\\
 \centering
 \input{Circuits/Cascode}

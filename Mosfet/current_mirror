@@ -6,8 +6,8 @@ Vin	gate	gnd	DC=5
 M1	drain	gate	source	gnd	NMOSB
 M2	drain	G2	vdd	vdd	PMOSB
 M3	G2	G2	vdd	vdd	PMOSB
-.MODEL	NMOSB	NMOS	level=1	KP=200U	VTO=0.4
-.MODEL	PMOSB	PMOS	level=1	KP=100U	VTO=-0.4
+.MODEL	NMOSB	NMOS	level=1	KP=200U	VTO=0.4	LAMBDA=0
+.MODEL	PMOSB	PMOS	level=1	KP=100U	VTO=-0.4	LAMBDA=0
 Vamp	source	gnd	DC	0
 
 .control

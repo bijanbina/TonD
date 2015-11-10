@@ -5,12 +5,14 @@ $$ A_V = -\dfrac{R_C || R_L}{g_m^{-1} + R_E} ~~ , ~~ r_o = \frac{1}{h_{oe}} = \f
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \par
 Common x is an amplifing configuration which the node x, is isolated from both input source and output node. To compute swing voltage this node and the output node are plotted versus $I_C$. This is done to independ the swing calculation from input alternate. So as said in Common Source configuration this is $I_D$ versus $V_DS$. After writing DC load line from mentioned nodes. We determine AC Line, Slope. So we define AC Line. AC Line is a Line with "AC Line Slope" Slope and pass from Quiscent point. so for common emitter configuration it is $ I_C = - ( R_C || R_L )^{-1} V_{CE} $
-\lipsum[1-2]
+\lipsum[1]
 \setlength{\parindent}{0.0cm} 
+\begin{minipage}[b]{.5\textwidth}
 $ R_o = (r_\pi ~||~ R_E) + ( 1 + g_m (r_\pi ~||~ R_E) )r_o$ or \\
 $ R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
 $ if ( g_m R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
-\begin{minipage}[t]{.5\textwidth}
+\par 
+\input{Circuits/BJT_Diode}
 \begin{tikzpicture}
 \tikzset{>=latex}
 %lines
@@ -43,6 +45,9 @@ $ if ( g_m R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
 \setlength{\parindent}{0.0cm} 
 \hspace*{-\parindent}%
 \begin{minipage}[b]{.5\textwidth}
+\centering
+\input{Circuits/BJT}
+~\par ~\\ ~\\
 \raggedleft
 \input{Circuits/CE}
 %\makesectionhead{Mosfet}{Common source}
