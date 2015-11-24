@@ -1,0 +1,32 @@
+bjt darlington
+
+.model QMOD1	npn
+
+$ AMMETERES $
+Vam1	vcc	ammc	DC	0
+Vam2	collec2	collec1	DC	0
+
+Vin	vsig	gnd	AC	0.001	DC	0$ SIN ( 0 1m 10K ) $ (VOffset VAmp FREQ)
+Vs	vcc	gnd	18
+Rc	ammc	collec2	30K
+Re	emit2	gnd	470
+$R1	vcc	base1	9K
+$R2	base1	gnd	1K
+Vb	base1	gnd	DC	1.35
+Cin	vsig	base1	100u
+C1	emit2	gnd	100u
+Q1	collec2 base1	base2	QMOD1
+Q2	collec1 base2	emit2	QMOD1
+
+
+.control
+	DC	Vs	0	20	0.1
+	plot	v(collec2, emit2)
+	plot	v(collec2, base2)
+	plot	v(base1)
+	plot	i(Vam1)
+	plot	i(Vam2)
+	AC	LIN	1K	1	100K
+	plot	MAG(collec2/0.001)
+.endc
+.end
