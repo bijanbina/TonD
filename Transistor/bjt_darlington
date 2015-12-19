@@ -20,7 +20,7 @@ Q2	collec1 base2	emit2	QMOD1
 
 
 .control
-	DC	Vs	0	20	0.1
+	DC	Vs	0	20	0.01
 	plot	v(collec2, emit2)
 	plot	v(collec2, base2)
 	plot	v(base1)

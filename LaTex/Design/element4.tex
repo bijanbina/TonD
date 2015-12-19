@@ -59,18 +59,38 @@ BoldItalicFont=texgyreheros-bolditalic.otf]
 }
 
 \renewcommand{\section}[1]{
+  \addtocounter{section}{1}
   \par\vspace{\parskip}
   {%
-    \LARGE\headingfont\color{headercolor}#1%
+    \LARGE\headingfont\color{headercolor} $\blacksquare$ #1%
     %\@sectioncolor #1%
   }
   \par\vspace{\parskip}
 }
 
+\begin{comment} %all section formatting are overwritten by next lines
 \renewcommand{\subsection}[1]{
+  \addtocounter{subsection}{1}
   \par\vspace{.5\parskip}%
   {%
-  \large\headingfont\color{headercolor} #1%
+  \large\headingfont\color{headercolor}#1%
   }
   \par\vspace{.25\parskip}%
 }
+
+\renewcommand{\subsubsection}[1]{
+  \addtocounter{subsubsection}{1}
+  \par\vspace{.5\parskip}%
+  {%
+  \headingfont\color{headercolor} #1%
+  }
+  \par\vspace{.5\parskip}%
+}
+\end{comment}
+
+%Section redifining
+%\titleformat{\section}[block]{\LARGE\headingfont\color{headercolor}$\blacksquare$~~}{\thesection.}{0.1em}{}
+\titleformat{\subsection}[block]{\large\headingfont\color{headercolor}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}[block]{\headingfont\color{headercolor}}{\thesubsubsection}{1em}{}
+%\titlespacing*{\subsection} {0em}{3.25ex plus 1ex minus .2ex}{0em}
+%\titlespacing*{\subsubsection} {0em}{1em}{0em}
