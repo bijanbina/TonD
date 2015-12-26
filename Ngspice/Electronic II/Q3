@@ -1,0 +1,21 @@
+Question 1
+
+.INCLUDE ua741
+Voss	vop+	gnd	DC	20
+Voee	vop-	gnd	DC	-20
+Xopamp	gnd	vinop-	vop+	vop-	vout	uA741
+Vin	input	gnd	SIN    (0	10m	1K)			* (VOffset VAmp FREQ)
+*LOLO
+R1	node1	input	10K
+R2	vout	node1	10K
+Rf1	node1	vinop-	100K
+Rf2	vinop-	gnd	1K
+
+.control
+	TRAN	0.01m	2m
+	plot	V(vout)
+	plot	V(node1)
+	plot	V(input)
+.endc
+.end
+
