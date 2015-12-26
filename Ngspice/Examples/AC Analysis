@@ -1,0 +1,19 @@
+*AC Analysis Example
+*
+	Is	2	0	AC	1
+	C1	2	0	1u
+	L1	2	0	10m
+	R1	2	0	1000
+.control
+*	TYPE	STEP	NUM	FSTART	FSTOP
+	AC	LIN	100	10	10k
+	plot	v(2)
+	plot	real(v(2))	$ same as plot v(2)
+	plot	imag(v(2))	$ imaginary part of v ( 2 )
+	plot	mag(v(2))	$ magnitude
+	$ plot	db(v(2)) 	$ same as vdb (2)
+	plot	phase(v(2))	$ phase in rad
+	plot	cph(v(2))	$ phase in rad , continuous beyond pi
+	plot	180/PI* phase(v(2))	$ phase in deg
+.endc
+.end
