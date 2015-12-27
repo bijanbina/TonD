@@ -1,0 +1,29 @@
+Question 1
+
+.INCLUDE ua741
+*1: common mode voltage source
+*2: opamp input
+*3: output
+$ ////////Op Amp//////////
+Voss	Vss+	gnd	DC	10
+Voee	Vss-	gnd	DC	-10
+*OpAmp	in-	in+	ss+	ss-	out
+Xopamp1	1	2	Vss+	Vss-	3	uA741
+$ /////////Input/////////
+Vcm	1	gnd	DC	0
+Vd	2	1	DC	35u	AC	35u
+$ /////////Output////////
+RL	3	gnd	2K
+
+.control
+	alter	Vcm	DC	=	1	$ <--- change common voltage to 1V
+	DC	Vd	5u	35u	0.1u
+	let	gain	=	V(3)/	V(1)	$ <--- commond mode gain, 
+						$ let command used to change verctor name
+	plot	gain		title	"gain"
+	plot	V(1)				$ <--- change applied to Vcm 
+						$ Warring: to change take effect simulation have to be 
+						$ preform
+
+.endc
+.end
