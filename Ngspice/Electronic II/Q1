@@ -1,49 +1,47 @@
 Question 1
 
 .INCLUDE ua741
+*1: common mode voltage source
+*2: opamp input
+*3: output
+$ ////////Op Amp//////////
 Voss	Vss+	gnd	DC	10
 Voee	Vss-	gnd	DC	-10
-Vs	1	gnd	DC	35u	AC	35u
-
-*///////////////////////////////////////////
-*///////////Differential Circuit////////////
-*///////////////////////////////////////////
-*1: input
-*2: opamp input
-*3: opamp output
-*4: output
-
-Xopamp1	1	gnd	Vss+	Vss-	3	uA741
-Vain1	1	2	DC	0				$ampere meter input
-Vaout1	3	4	DC	0				$ampere meter output
-RL1	4	gnd	2K
-
-*///////////////////////////////////////////
-*////////////Common Mode Circuit////////////
-*///////////////////////////////////////////
-*5: opamp input
-*6: opamp output
-*7: output
-
-Xopamp2	5	5	Vss+	Vss-	6	uA741
-Vain2	1	5	DC	0
-Vaout2	6	7	DC	0
-RL2	7	gnd	2K
+*OpAmp	in-	in+	ss+	ss-	out
+Xopamp1	1	2	Vss+	Vss-	3	uA741
+$ /////////Input/////////
+Vcm	1	gnd	DC	0
+Vd	2	1	DC	35u	AC	35u
+$ /////////Output////////
+RL	3	gnd	2K
 
 .control
+
 	$ Common Mode Circuit
-	DC	Vs	10m	2	10m
-	set	curplottitle="DC Common Mode Gain"
-	plot	V(7)/V(1)
-	plot	V(7)
+	DC	Vcm	10m	2	10m
+	let	Gain	=	Abs	(V(3)/	V(1))
+	let	Vout	=	V(3)
+	plot	Gain		title	"DC Common Mode Gain"
+	plot	Vout		title	"DC Common Mode Output"
+	
 	$ Differential
-	DC	Vs	30u	50u	0.1u
-	set	curplottitle="DC Differential Gain"
-	plot	V(4)/V(1)
-	set	curplottitle="Vout"
-	plot	V(4)
+	DC	Vd	5u	35u	0.1u
+	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
+	let	Vout	=	V(3)
+	plot	Gain		title	"DC Differential Gain"
+	plot	Vout		title	"DC Differential Vout"
+	
 	AC	LIN	100	0.01	2
-	set	curplottitle="AC Gain"
-	plot	V(4)/V(1)
+	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
+	plot	Gain		title	"AC Differential Gain"
+	
+	$ CMRR
+	alter	Vcm	DC	=	1	$ <--- change common voltage to 1V
+	DC	Vd	5u	35u	0.1u
+	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
+	let	a_c	=	V(3)/	V(1)	$ <--- commond mode gain
+	let	CMRR	=	Gain/	a_c
+	plot	CMRR		title	"CMRR"
+
 .endc
 .end
