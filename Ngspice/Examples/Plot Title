@@ -16,6 +16,8 @@ $ /////////Output////////
 RL	3	gnd	2K
 
 .control
+	set hcopypscolor=0			$ unless plot in blasck and white
+						$	use unset to disable it
 	alter	Vcm	DC	=	1	$ <--- change common voltage to 1V
 	DC	Vd	5u	35u	0.1u
 	let	gain	=	V(3)/	V(1)	$ <--- commond mode gain, 
@@ -24,6 +26,7 @@ RL	3	gnd	2K
 	plot	V(1)				$ <--- change applied to Vcm 
 						$ Warring: to change take effect simulation have to be 
 						$ preform
-
+						
+	hardcopy "name"	V(1)			$ save as postscript
 .endc
 .end

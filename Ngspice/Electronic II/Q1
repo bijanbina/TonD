@@ -16,24 +16,25 @@ $ /////////Output////////
 RL	3	gnd	2K
 
 .control
-
+	$ set plot options
+	  set hcopypscolor=0
 	$ Common Mode Circuit
 	DC	Vcm	10m	2	10m
 	let	Gain	=	Abs	(V(3)/	V(1))
 	let	Vout	=	V(3)
-	plot	Gain		title	"DC Common Mode Gain"
-	plot	Vout		title	"DC Common Mode Output"
+	hardcopy	'Plot/DC Common Mode Gain.ps'	Gain
+	hardcopy	'Plot/DC Common Mode Output.ps'	Vout
 	
 	$ Differential
 	DC	Vd	5u	35u	0.1u
 	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
 	let	Vout	=	V(3)
-	plot	Gain		title	"DC Differential Gain"
-	plot	Vout		title	"DC Differential Vout"
+	hardcopy	'Plot/DC Differential Gain.ps'	Gain
+	hardcopy	'Plot/DC Differential Vout.ps'	Vout
 	
 	AC	LIN	100	0.01	2
 	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
-	plot	Gain		title	"AC Differential Gain"
+	hardcopy	'Plot/AC Differential Gain.ps'	Gain
 	
 	$ CMRR
 	alter	Vcm	DC	=	1	$ <--- change common voltage to 1V
@@ -41,7 +42,7 @@ RL	3	gnd	2K
 	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
 	let	a_c	=	V(3)/	V(1)	$ <--- commond mode gain
 	let	CMRR	=	Gain/	a_c
-	plot	CMRR		title	"CMRR"
-
+	hardcopy	'Plot/CMRR.ps'			CMRR
+	shell		./2jpg.sh		$ convert post script to jpg
 .endc
 .end
