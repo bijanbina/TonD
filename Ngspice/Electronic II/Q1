@@ -11,7 +11,7 @@ Voee	Vss-	gnd	DC	-10
 Xopamp1	2	1	Vss+	Vss-	3	uA741
 $ /////////Input/////////
 Vcm	1	gnd	DC	0
-Vd	2	1	DC	10u	AC	25u	SIN    (-20u	5m	1K) *(VOffset VAmp FREQ)
+Vd	2	1	DC	10u	AC	25u	SIN    (-20u	5m	1K) $ (VOffset VAmp FREQ)
 $ /////////Output////////
 Vamp	3	4	DC	0			$ <---- output ampre meter
 RL	4	gnd	2K
@@ -23,9 +23,9 @@ RL	4	gnd	2K
 	$ ----- Part 1 ------
 	
 	$ Differential
-	DC	Vd	5u	35u	0.1u
-	let	Gain	=	V(3)	/V(2,1)
-	let	Vout	=	V(3)
+	DC	Vd	1n	35u	0.1u
+	let	Gain	=		(V(3)-V(3)[0])/V(2,1)
+	let	Vout	=		V(3)
 	hardcopy	'Plot/1-1.DC Differential Gain.ps'	Gain
 	hardcopy	'Plot/1-2.DC Differential Vout.ps'	Vout
 	
@@ -36,8 +36,8 @@ RL	4	gnd	2K
 	
 	$ Common Mode Circuit
 	alter	Vd	DC	=	0	$ <--- change differantial voltage to 0V
-	DC	Vcm	10m	2	10m
-	let	Gain	=		V(3)/	V(1)
+	DC	Vcm	1u	2	10m
+	let	Gain	=	Abs	((V(3)-V(3)[0])/V(1))
 	let	Rin	=		-V(3)	/I(Vcm)
 	$ let	Vout	=		V(3)
 	hardcopy	'Plot/1-4.DC Common Mode Gain.ps'	Gain
@@ -45,10 +45,11 @@ RL	4	gnd	2K
 	
 	
 	$ CMRR
-	alter	Vcm	DC	=	1	$ <--- change common voltage to 1V
-	DC	Vd	5u	30u	0.1u
+	alter	Vcm	AC	=	1			$ <--- change common voltage to 1V
+	alter	Vd	AC	=	10u			$ <--- change differantial voltage to 1V
+	AC	LIN	100	0.01	1
 	let	Gain	=		V(3)/V(2,1)
-	let	a_c	=		V(3)/	V(1)	$ <--- commond mode gain
+	let	a_c	=		V(3)			$ <--- commond mode gain
 	let	CMRR	=		Gain/a_c
 	hardcopy	'Plot/1-5.CMRR.ps'			CMRR
 	
@@ -136,6 +137,8 @@ RL	4	gnd	2K
 	TRAN	10u	103m	100m
 	let	Vin		=	V(2)
 	hardcopy	'Plot/8-2.Transient.ps'			Vout
+	
+	plot 0/0
 
 	
 	shell		./2jpg.sh						$ convert post script to jpg
