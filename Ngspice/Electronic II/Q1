@@ -7,42 +7,137 @@ Question 1
 $ ////////Op Amp//////////
 Voss	Vss+	gnd	DC	10
 Voee	Vss-	gnd	DC	-10
-*OpAmp	in-	in+	ss+	ss-	out
-Xopamp1	1	2	Vss+	Vss-	3	uA741
+*OpAmp	in+	in-	ss+	ss-	out
+Xopamp1	2	1	Vss+	Vss-	3	uA741
 $ /////////Input/////////
 Vcm	1	gnd	DC	0
-Vd	2	1	DC	35u	AC	35u
+Vd	2	1	DC	10u	AC	25u	SIN    (-20u	5m	1K) *(VOffset VAmp FREQ)
 $ /////////Output////////
-RL	3	gnd	2K
+Vamp	3	4	DC	0			$ <---- output ampre meter
+RL	4	gnd	2K
 
 .control
 	$ set plot options
 	  set hcopypscolor=0
-	$ Common Mode Circuit
-	DC	Vcm	10m	2	10m
-	let	Gain	=	Abs	(V(3)/	V(1))
-	let	Vout	=	V(3)
-	hardcopy	'Plot/DC Common Mode Gain.ps'	Gain
-	hardcopy	'Plot/DC Common Mode Output.ps'	Vout
+	
+	$ ----- Part 1 ------
 	
 	$ Differential
 	DC	Vd	5u	35u	0.1u
-	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
+	let	Gain	=	V(3)	/V(2,1)
 	let	Vout	=	V(3)
-	hardcopy	'Plot/DC Differential Gain.ps'	Gain
-	hardcopy	'Plot/DC Differential Vout.ps'	Vout
+	hardcopy	'Plot/1-1.DC Differential Gain.ps'	Gain
+	hardcopy	'Plot/1-2.DC Differential Vout.ps'	Vout
 	
-	AC	LIN	100	0.01	2
-	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
-	hardcopy	'Plot/AC Differential Gain.ps'	Gain
+	
+	AC	LIN	100	0.01	4
+	let	Gain	=		V(3)/V(2,1)
+	hardcopy	'Plot/1-3.AC Differential Gain.ps'	Gain
+	
+	$ Common Mode Circuit
+	alter	Vd	DC	=	0	$ <--- change differantial voltage to 0V
+	DC	Vcm	10m	2	10m
+	let	Gain	=		V(3)/	V(1)
+	let	Rin	=		-V(3)	/I(Vcm)
+	$ let	Vout	=		V(3)
+	hardcopy	'Plot/1-4.DC Common Mode Gain.ps'	Gain
+	$ hardcopy	'Plot/1-5.DC Common Mode Output.ps'	Vout
+	
 	
 	$ CMRR
 	alter	Vcm	DC	=	1	$ <--- change common voltage to 1V
-	DC	Vd	5u	35u	0.1u
-	let	Gain	=	Abs	(V(3)/(V(2)-V(1)))
-	let	a_c	=	V(3)/	V(1)	$ <--- commond mode gain
-	let	CMRR	=	Gain/	a_c
-	hardcopy	'Plot/CMRR.ps'			CMRR
-	shell		./2jpg.sh		$ convert post script to jpg
+	DC	Vd	5u	30u	0.1u
+	let	Gain	=		V(3)/V(2,1)
+	let	a_c	=		V(3)/	V(1)	$ <--- commond mode gain
+	let	CMRR	=		Gain/a_c
+	hardcopy	'Plot/1-5.CMRR.ps'			CMRR
+	
+	$ ----- Part 2 ------
+	
+	$ Rin Differantial
+	alter	Vd	AC	=	1
+	alter	Vd	DC	=	20u
+	alter	Vcm	DC	=	0
+	AC	LIN	100	0.1	400
+	let	Rin	=	ceil	(-1/I(Vd))
+	hardcopy	'Plot/2-1.Rin Differential.ps'		Rin
+	
+	$ Rin Common Mode
+	alter	Vd	AC	=	0
+	alter	Vcm	AC	=	1
+	AC	LIN	100	0.01	4
+	let	Rin	=	ceil	(-1/I(Vcm))
+	hardcopy	'Plot/2-2.Rin Common Mode.ps'		Rin
+	
+	$ ----- Part 3 ------
+	
+	$ Rout
+	alter	Vd	AC	=	0
+	alter	RL	R	=	1G	$ OpenCircuit
+	TF	V(3,5)	Vd
+	print	"output_impedance_at_v(3,5)"
+	
+		
+	$ ----- Part 4 ------
+	
+	$ Frequency Responce
+	alter	Vd	AC	=	1
+	AC	LIN	100	0.01	10K
+	let	Gain	=		V(3)/1V					$ input is unit
+	hardcopy	'Plot/4-2.Gain Magnitude.ps'		mag(Gain)	$ magnitude
+	hardcopy	'Plot/4-2.Gain Phase.ps'		phase(Gain)	$ phase in rad	
+	
+		
+	$ ----- Part 5 ------
+	
+	$ Rout
+	alter	RL	R	=	1K					$ change to normall
+	DC	Vd	-35u	35u	0.1u
+	let	Gain	=	V(3)	/V(2,1)
+	let	Vout	=	V(3)
+	hardcopy	'Plot/5-1.Offset.ps'			Vout\
+	
+		
+	$ ----- Part 6 ------
+	
+	$ THD 5v
+	alter	Vd	AC	=	0
+	alter	Vd	DC	=	0
+	alter	RL	R	=	1K					$ change load to 1K
+	TRAN	10u	103m	100m
+	let	Vout		=	V(3)
+	let	Vin		=	V(2)
+	hardcopy	'Plot/6-1.Input.ps'			Vin
+	hardcopy	'Plot/6-2.Transient.ps'			Vout
+
+	FOURIER	1K	Vout
+	
+	$ ----- Part 7 ------
+	
+	$ THD 9v
+	alter	Vd	SIN     =	(-19.5u	9.3m	1K)
+	TRAN	10u	103m	100m
+	let	Vout		=	V(3)
+	let	Vin		=	V(2)
+	hardcopy	'Plot/7-1.Input.ps'			Vin
+	hardcopy	'Plot/7-2.Transient.ps'			Vout
+
+	FOURIER	1K	Vout
+	
+	
+	$ ----- Part 8 ------
+	
+	$ 1k Gain
+	alter	Vd	AC	=	1
+	AC	LIN	100	100	10K
+	let	Gain		=	V(3)/V(1)
+	hardcopy	'Plot/8-1.Gain.ps'			Gain
+	alter	Vd	SIN     =	(-19.5u	5m	1K)
+	TRAN	10u	103m	100m
+	let	Vin		=	V(2)
+	hardcopy	'Plot/8-2.Transient.ps'			Vout
+
+	
+	shell		./2jpg.sh						$ convert post script to jpg
 .endc
 .end
