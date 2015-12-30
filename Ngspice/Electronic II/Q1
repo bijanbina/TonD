@@ -74,7 +74,7 @@ RL	4	gnd	2K
 	
 	$ Rout
 	alter	Vd	AC	=	0
-	alter	RL	R	=	1G	$ OpenCircuit
+	alter	RL		=	1G	$ OpenCircuit
 	TF	V(3,5)	Vd
 	print	"output_impedance_at_v(3,5)"
 	
@@ -92,11 +92,11 @@ RL	4	gnd	2K
 	$ ----- Part 5 ------
 	
 	$ Rout
-	alter	RL	R	=	1K					$ change to normall
-	DC	Vd	-35u	35u	0.1u
+	alter	RL	 	=	1K					$ change to normall
+	DC	Vd	-60u	35u	0.1u
 	let	Gain	=	V(3)	/V(2,1)
 	let	Vout	=	V(3)
-	hardcopy	'Plot/5-1.Offset.ps'			Vout\
+	hardcopy	'Plot/5-1.Offset.ps'			Vout
 	
 		
 	$ ----- Part 6 ------
@@ -104,7 +104,7 @@ RL	4	gnd	2K
 	$ THD 5v
 	alter	Vd	AC	=	0
 	alter	Vd	DC	=	0
-	alter	RL	R	=	1K					$ change load to 1K
+	alter	RL		=	1K					$ change load to 1K
 	TRAN	10u	103m	100m
 	let	Vout		=	V(3)
 	let	Vin		=	V(2)
@@ -116,7 +116,7 @@ RL	4	gnd	2K
 	$ ----- Part 7 ------
 	
 	$ THD 9v
-	alter	Vd	SIN     =	(-19.5u	9.3m	1K)
+	alter	Vd	SIN     =	(-19.5u 9.3m 1K)
 	TRAN	10u	103m	100m
 	let	Vout		=	V(3)
 	let	Vin		=	V(2)
@@ -129,18 +129,68 @@ RL	4	gnd	2K
 	$ ----- Part 8 ------
 	
 	$ 1k Gain
-	alter	Vd	AC	=	1
-	AC	LIN	100	100	10K
-	let	Gain		=	V(3)/V(1)
+	alter	Vd	AC	=	1m
+	alter	Vcm	AC	=	0
+	AC	LIN	100	900	1K
+	let	Gain		=	Mag(V(3)/V(2,1))
 	hardcopy	'Plot/8-1.Gain.ps'			Gain
-	alter	Vd	SIN     =	(-19.5u	5m	1K)
+	alter	Vd	SIN     =	(-19.5u	5m	975)
 	TRAN	10u	103m	100m
-	let	Vin		=	V(2)
+	let	Vout		=	V(3)
 	hardcopy	'Plot/8-2.Transient.ps'			Vout
 	
-	plot 0/0
-
 	
-	shell		./2jpg.sh						$ convert post script to jpg
+	$ ----- Part 9 ------
+	
+	$ 1k Gain
+	AC	LIN	100	100K	1MEG
+	let	Gain		=	Mag(V(3)/V(2,1))
+	hardcopy	'Plot/9-1.Gain.ps'			Gain
+
+	$ TRAN	0.1u	100m	0m
+
+	let	Vout		=	V(3)
+	$ hardcopy	'Plot/9-2.Transient.ps'			Vout
+	
+	$ ----- Part 10 ------
+	
+	alter	RL	=	1u	$ remove load
+	DC	Vd	-50u	35u	0.1u
+	hardcopy	'Plot/10-1.Maximmum Cruurent.ps'			I(Vamp)
+	plot	I(Vamp)
+	
+	$ ----- Part 11 ------
+	
+	alter	RL	=	1K	
+	DC	Vd	1n	35u	0.1u
+	let	Gain	=		(V(3)-V(3)[0])/V(2,1)
+	hardcopy	'Plot/11-1.DC Differential Gain.ps'	Gain
+	DC	Vd	1u	35u	0.1u
+	let	Gain	=		(V(3))/V(2,1)
+	hardcopy	'Plot/11-2.DC Gain Offset.ps'	Gain
+	
+	$ ----- Part 12 ------
+	
+	alter	RL	=	1u	$ remove load
+	DC	Vd	1n	35u	0.1u
+	let	Gm	=		(I(Vamp)-I(Vamp)[0])/V(2,1)
+	hardcopy	'Plot/12-1.Transcunductance Gain.ps'	Gm
+	
+	$ ----- Part 13 ------
+	
+	alter	RL	=	1K	$ restore load
+	let start_t	=	10	$ start	temp
+	let stop_t	=	100	$ stop	temp
+	let delta_t	=	1	$ step temp
+	let curr_t	=	start_t	$ current temp
+	while curr_t	le	stop_t
+		alter	temp	curr_t
+		op
+		print v (2)
+		let curr_t = curr_t + delta_t
+		let ts[curr_t-start_t] = curr_t
+		let sfd[1] = 2
+	end
+	$shell		./2jpg.sh						$ convert postscript to jpg
 .endc
 .end
