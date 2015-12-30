@@ -5,10 +5,10 @@ Question 1
 *2: opamp input
 *3: output
 $ ////////Op Amp//////////
-Voss	Vss+	gnd	DC	10
-Voee	Vss-	gnd	DC	-10
+Voss	Vcc	gnd	DC	10
+Voee	Vee	gnd	DC	-10
 *OpAmp	in+	in-	ss+	ss-	out
-Xopamp1	2	1	Vss+	Vss-	3	uA741
+Xopamp1	2	1	Vcc	Vee	3	uA741
 $ /////////Input/////////
 Vcm	1	gnd	DC	0
 Vd	2	1	DC	10u	AC	25u	SIN    (-20u	5m	1K) $ (VOffset VAmp FREQ)
@@ -157,7 +157,6 @@ RL	4	gnd	2K
 	alter	RL	=	1u	$ remove load
 	DC	Vd	-50u	35u	0.1u
 	hardcopy	'Plot/10-1.Maximmum Cruurent.ps'			I(Vamp)
-	plot	I(Vamp)
 	
 	$ ----- Part 11 ------
 	
@@ -179,18 +178,54 @@ RL	4	gnd	2K
 	$ ----- Part 13 ------
 	
 	alter	RL	=	1K	$ restore load
-	let start_t	=	10	$ start	temp
-	let stop_t	=	100	$ stop	temp
-	let delta_t	=	1	$ step temp
-	let curr_t	=	start_t	$ current temp
-	while curr_t	le	stop_t
-		alter	temp	curr_t
-		op
-		print v (2)
-		let curr_t = curr_t + delta_t
-		let ts[curr_t-start_t] = curr_t
-		let sfd[1] = 2
-	end
-	$shell		./2jpg.sh						$ convert postscript to jpg
+	alter	Vd	=	10u	$ set load
+	DC	TEMP	-15	100	1
+	let	Gain	=		(V(3)-3.56)/V(2,1)
+	hardcopy	'Plot/13-1.Temp Differential Gain.ps'	Gain
+	
+	$ ----- Part 14 ------
+	OP
+	let	power_load =	abs(V(Vcc)*I(Voss)) + abs(V(Vee)*I(Voee))
+	print	power_load
+	
+	alter	RL	=	1G	$ noload
+	OP
+	let	power_noload = 	abs(V(Vcc)*I(Voss)) + abs(V(Vee)*I(Voee))
+	print	power_noload
+	
+	$ ----- Part 15 ------
+	
+	alter	RL	=	100	$ set load
+	alter	Vd	SIN	=	(-19.5u 8m 1K)	
+	TRAN	10u	103m	100m
+	let	power_ins	= abs(V(Vcc)*I(Voss)) + abs(V(Vee)*I(Voee))
+	let	Vout		=	V(3)
+	hardcopy	'Plot/15-1.Vout.ps'	Vout
+	
+	$ fixed
+	
+	alter	Voee	=	-20	$ set load
+	alter	Voss	=	20	
+	TRAN	10u	103m	100m
+	let	power_ins	= -V(Vcc)*I(Voss) -V(Vee)*I(Voee)
+	let	Vout		=	V(3)
+	hardcopy	'Plot/15-2.Vout Max.ps'	Vout
+	
+	$ lower
+	
+	alter	Voee	=	-10	$ set load
+	alter	Voss	=	10	
+	alter	Vd	SIN	=	(-19.5u 6m 1K)	
+	TRAN	10u	103m	100m
+	let	power_ins	= -V(Vcc)*I(Voss) -V(Vee)*I(Voee)
+	let	power_load	= V(4)*I(Vamp)
+	let	Vout		=	V(3)
+	hardcopy	'Plot/15-3.Vout 4v.ps'	Vout
+	hardcopy	'Plot/15-4.power 4v.ps'	power_ins
+	hardcopy	'Plot/16-1.power load.ps' power_load
+	
+	shell		./2jpg.sh				$ convert postscript to jpg
+	
+	
 .endc
 .end
