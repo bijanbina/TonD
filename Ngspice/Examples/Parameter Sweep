@@ -1,0 +1,15 @@
+
+.control
+	let start_t	=	10	$ start	temp
+	let stop_t	=	100	$ stop	temp
+	let delta_t	=	1	$ step temp
+	let curr_t	=	start_t	$ current temp
+	while curr_t	le	stop_t
+		alter	temp	curr_t
+		op
+		print v (2)
+		let curr_t = curr_t + delta_t
+		let ts[curr_t-start_t] = curr_t
+		let sfd[1] = 2
+	end
+.endc
