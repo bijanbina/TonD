@@ -9,7 +9,9 @@ V1	drain	gnd	DC=0
 .MODEL	PMOSB	PMOS	level=1	KP=100U	VTO=-0.4
 
 .control
-	dc	Vs	0	10	0.01
+	dc	Vs	-0.7	10	0.01
 	plot	I(V1)
+	let	Vds	=	V(drain,vdd)
+	plot	Vds
 .endc
 .end

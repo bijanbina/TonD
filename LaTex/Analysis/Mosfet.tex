@@ -1,5 +1,5 @@
 \subsection{Mosfet Basics}
-MOSFETs are classified onto two types. depletion type and enhancement type. The depletion-type MOSFET are block currents on normal condition ( No biasing ) and allow current to flow under voltage applied to their gates. The enhancement type is reversed so it allow current to flow under normal condition and block it under biased.
+MOSFETs are classified onto two types, depletion-type and enhancement-type. The enhancement-type MOSFET are block currents on normal condition ( No biasing ) and if a voltage applied to their gates it will enhance the current flow. On the other hand the depletion-type is reversed so under normal condition it allow current to flow under normal condition and block it as gate voltage grows. In this context we will consider only enhancement-type. In the following equations assumed that in NMOS transistor $I_d$ is current from drain to source and for PMOS transistor $I_d$ defined as current from source to drain. to all plot be consistent in NMOS and PMOS and both act the same $I_d$ defined as mentioned moreover the $V_{TH}$ and $\lambda$ both just magnitude used and $V_{GS}$ in NMOS map to $V_{SG}$ in PMOS so all  rules can apply to PMOS as the same as NMOS.
 \subsubsection{NMOS}
 $$ k = {\mu}_n C_{ox} \frac{W}{L} ~~ , ~~ V_{ov} = V_{GS} - V_{TH} ~~, ~~  Saturation: I_D = \frac{k}{2} {V_{ov}}^2 ~~,~~ Triode = k [(V_{GS} - V_{TH})V_{DS} - \frac{1}{2}{V_{DS}}^2]$$
 \par
@@ -10,4 +10,4 @@ $$ k^{`}_p = {\mu}_p C_{ox} \frac{W}{L} ~~, ~~ I_D = \frac{k}{2} (V_{SG} - |V_{T
 $$ \text{Triode:~} V_{DS} < V_{GS} - V_{TH} $$
 $$ \text{Saturation:~} V_{DS} > V_{GS} - V_{TH} $$
 \subsubsection{Final Words}
-\lipsum[60-63]
+\lipsum[60-62]
