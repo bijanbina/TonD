@@ -217,7 +217,8 @@ RL	4	gnd	2K
 	alter	Voss	=	10	
 	alter	Vd	SIN	=	(-19.5u 6m 1K)	
 	TRAN	10u	103m	100m
-	let	power_ins	= -V(Vcc)*I(Voss) -V(Vee)*I(Voee)
+	$ let	power_ins	= -V(Vcc)*I(Voss) -V(Vee)*I(Voee)
+	let	power_ins	= V(Vcc,Vee)*I(Voss)
 	let	power_load	= V(4)*I(Vamp)
 	let	Vout		=	V(3)
 	hardcopy	'Plot/15-3.Vout 4v.ps'	Vout
