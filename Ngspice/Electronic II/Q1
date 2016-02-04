@@ -18,7 +18,7 @@ RL	4	gnd	2K
 
 .control
 	$ set plot options
-	  set hcopypscolor=0
+	set hcopypscolor=1
 	
 	$ ----- Part 1 ------
 	
@@ -26,13 +26,13 @@ RL	4	gnd	2K
 	DC	Vd	1n	35u	0.1u
 	let	Gain	=		(V(3)-V(3)[0])/V(2,1)
 	let	Vout	=		V(3)
-	hardcopy	'Plot/1-1.DC Differential Gain.ps'	Gain
-	hardcopy	'Plot/1-2.DC Differential Vout.ps'	Vout
+	hardcopy	'Plot/1-1.DC_Differential_Gain.ps'	Gain
+	hardcopy	'Plot/1-2.DC_Differential_Vout.ps'	Vout
 	
 	
 	AC	LIN	100	0.01	4
 	let	Gain	=		V(3)/V(2,1)
-	hardcopy	'Plot/1-3.AC Differential Gain.ps'	Gain
+	hardcopy	'Plot/1-3.AC_Differential_Gain.ps'	Gain
 	
 	$ Common Mode Circuit
 	alter	Vd	DC	=	0	$ <--- change differantial voltage to 0V
@@ -40,14 +40,14 @@ RL	4	gnd	2K
 	let	Gain	=	Abs	((V(3)-V(3)[0])/V(1))
 	let	Rin	=		-V(3)	/I(Vcm)
 	$ let	Vout	=		V(3)
-	hardcopy	'Plot/1-4.DC Common Mode Gain.ps'	Gain
-	$ hardcopy	'Plot/1-5.DC Common Mode Output.ps'	Vout
+	hardcopy	'Plot/1-4.DC_Common_Mode_Gain.ps'	Gain
+	$ hardcopy	'Plot/1-5.DC_Common_Mode_Output.ps'	Vout
 	
 	
 	$ CMRR
 	alter	Vcm	AC	=	1			$ <--- change common voltage to 1V
-	alter	Vd	AC	=	10u			$ <--- change differantial voltage to 1V
-	AC	LIN	100	0.01	1
+	alter	Vd	AC	=	10u			$ <--- change differantial voltage to 1uV
+	AC	LIN	100	0.01	10
 	let	Gain	=		V(3)/V(2,1)
 	let	a_c	=		V(3)			$ <--- commond mode gain
 	let	CMRR	=		Gain/a_c
@@ -61,14 +61,14 @@ RL	4	gnd	2K
 	alter	Vcm	DC	=	0
 	AC	LIN	100	0.1	400
 	let	Rin	=	ceil	(-1/I(Vd))
-	hardcopy	'Plot/2-1.Rin Differential.ps'		Rin
+	hardcopy	'Plot/2-1.Rin_Differential.ps'		Rin
 	
 	$ Rin Common Mode
 	alter	Vd	AC	=	0
 	alter	Vcm	AC	=	1
 	AC	LIN	100	0.01	4
 	let	Rin	=	ceil	(-1/I(Vcm))
-	hardcopy	'Plot/2-2.Rin Common Mode.ps'		Rin
+	hardcopy	'Plot/2-2.Rin_Common_Mode.ps'		Rin
 	
 	$ ----- Part 3 ------
 	
@@ -83,10 +83,10 @@ RL	4	gnd	2K
 	
 	$ Frequency Responce
 	alter	Vd	AC	=	1
-	AC	LIN	100	0.01	10K
+	AC	LIN	100	0.01	1K
 	let	Gain	=		V(3)/1V					$ input is unit
-	hardcopy	'Plot/4-2.Gain Magnitude.ps'		mag(Gain)	$ magnitude
-	hardcopy	'Plot/4-2.Gain Phase.ps'		phase(Gain)	$ phase in rad	
+	hardcopy	'Plot/4-1.Gain_Magnitude.ps'		mag(Gain)	$ magnitude
+	hardcopy	'Plot/4-2.Gain_Phase.ps'		phase(Gain)	$ phase in rad	
 	
 		
 	$ ----- Part 5 ------
@@ -116,12 +116,13 @@ RL	4	gnd	2K
 	$ ----- Part 7 ------
 	
 	$ THD 9v
-	alter	Vd	SIN     =	(-19.5u 9.3m 1K)
+	alter	Vd	SIN     =	(-19.5u 9.55m 1K)
 	TRAN	10u	103m	100m
 	let	Vout		=	V(3)
 	let	Vin		=	V(2)
 	hardcopy	'Plot/7-1.Input.ps'			Vin
 	hardcopy	'Plot/7-2.Transient.ps'			Vout
+	plot				Vout
 
 	FOURIER	1K	Vout
 	
@@ -147,33 +148,33 @@ RL	4	gnd	2K
 	let	Gain		=	Mag(V(3)/V(2,1))
 	hardcopy	'Plot/9-1.Gain.ps'			Gain
 
-	$ TRAN	0.1u	100m	0m
+	$TRAN	0.1u	100m	0m
 
-	let	Vout		=	V(3)
-	$ hardcopy	'Plot/9-2.Transient.ps'			Vout
+	$let	Vout		=	V(3)
+	$hardcopy	'Plot/9-2.Transient.ps'			Vout
 	
 	$ ----- Part 10 ------
 	
 	alter	RL	=	1u	$ remove load
 	DC	Vd	-50u	35u	0.1u
-	hardcopy	'Plot/10-1.Maximmum Cruurent.ps'			I(Vamp)
+	hardcopy	'Plot/10-1.Maximmum_Cruurent.ps'			I(Vamp)
 	
 	$ ----- Part 11 ------
 	
 	alter	RL	=	1K	
 	DC	Vd	1n	35u	0.1u
 	let	Gain	=		(V(3)-V(3)[0])/V(2,1)
-	hardcopy	'Plot/11-1.DC Differential Gain.ps'	Gain
+	hardcopy	'Plot/11-1.DC_Differential_Gain.ps'	Gain
 	DC	Vd	1u	35u	0.1u
 	let	Gain	=		(V(3))/V(2,1)
-	hardcopy	'Plot/11-2.DC Gain Offset.ps'	Gain
+	hardcopy	'Plot/11-2.DC_Gain_Offset.ps'	Gain
 	
 	$ ----- Part 12 ------
 	
 	alter	RL	=	1u	$ remove load
 	DC	Vd	1n	35u	0.1u
 	let	Gm	=		(I(Vamp)-I(Vamp)[0])/V(2,1)
-	hardcopy	'Plot/12-1.Transcunductance Gain.ps'	Gm
+	hardcopy	'Plot/12-1.Transcunductance_Gain.ps'	Gm
 	
 	$ ----- Part 13 ------
 	
@@ -181,7 +182,7 @@ RL	4	gnd	2K
 	alter	Vd	=	10u	$ set load
 	DC	TEMP	-15	100	1
 	let	Gain	=		(V(3)-3.56)/V(2,1)
-	hardcopy	'Plot/13-1.Temp Differential Gain.ps'	Gain
+	hardcopy	'Plot/13-1.Temp_Differential_Gain.ps'	Gain
 	
 	$ ----- Part 14 ------
 	OP
@@ -207,9 +208,9 @@ RL	4	gnd	2K
 	alter	Voee	=	-20	$ set load
 	alter	Voss	=	20	
 	TRAN	10u	103m	100m
-	let	power_ins	= -V(Vcc)*I(Voss) -V(Vee)*I(Voee)
+	let	power_ins	= -V(Vcc)*I(Voss) - V(Vee)*I(Voee)
 	let	Vout		=	V(3)
-	hardcopy	'Plot/15-2.Vout Max.ps'	Vout
+	hardcopy	'Plot/15-2.Vout_Max.ps'	Vout
 	
 	$ lower
 	
@@ -221,9 +222,9 @@ RL	4	gnd	2K
 	let	power_ins	= V(Vcc,Vee)*I(Voss)
 	let	power_load	= V(4)*I(Vamp)
 	let	Vout		=	V(3)
-	hardcopy	'Plot/15-3.Vout 4v.ps'	Vout
-	hardcopy	'Plot/15-4.power 4v.ps'	power_ins
-	hardcopy	'Plot/16-1.power load.ps' power_load
+	hardcopy	'Plot/15-3.Vout_4v.ps'	Vout
+	hardcopy	'Plot/15-4.power_4v.ps'	power_ins
+	hardcopy	'Plot/16-1.power_load.ps' power_load
 	
 	shell		./2jpg.sh				$ convert postscript to jpg
 	

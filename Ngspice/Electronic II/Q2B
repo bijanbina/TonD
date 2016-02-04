@@ -1,0 +1,124 @@
+Question 2
+
+.INCLUDE ua741
+*1: common mode voltage source
+*2: opamp input
+*3: output
+$ ////////Op Amp//////////
+Voss	Vss+	gnd	DC	10
+Voee	Vss-	gnd	DC	-10
+*OpAmp	in+	in-	ss+	ss-	out
+Xopamp1	gnd	2	Vss+	Vss-	4	uA741
+$ /////////Input/////////
+Vs	1	gnd	DC	0	SIN	(0	0.5	1K)
+$ /////////Output////////
+Vamp	2	3	DC	0			$ <---- input ampre meter
+R1	1	2	1K
+R2	2	4	10K
+Rl1	gnd	4	1K
+Rgm	4	8	1G				$ <---- short on measuring gm
+Vao	8	gnd	DC	0			$ <---- output ampre meter
+
+///////////IDEAL/////////
+E1	7	gnd	6	gnd	1MEG
+R3	1	6	1K
+R4	6	7	10K
+Rl2	7	gnd	1K
+
+.control
+		
+	set hcopypscolor=1
+	$ ----- Part 5 ------
+	$ Sin resoponce
+	
+	TRAN	10u	3m	0m
+	let	Vout		=	V(4)
+	let	Vin		=	V(1)
+	hardcopy	'Plot/B5-1.Vin.ps'	Vin
+	hardcopy	'Plot/B5-2.Vout.ps'	Vout
+		
+	$ ----- Part 6 ------
+	$ Frequency Response
+	
+	alter	Vs	AC	=	1			$ <--- change differantial voltage to 1V
+	AC	LIN	100	10	10K
+	let	Gain	=		V(4)/V(1)				$ input is unit
+	hardcopy	'Plot/B6-1.Gain_Mag.ps'			mag(Gain)	$ magnitude
+	hardcopy	'Plot/B6-2.Gain_Phase.ps'		phase(Gain)	$ phase in rad	
+	
+	$ ----- Part 7 ------
+	$ Rin
+	
+	alter	Vs	AC	=	1
+	
+	AC	LIN	1000	1	40K
+	let	Rin	=	ceil	(-1/I(Vs))
+	hardcopy	'Plot/B7-1.Rin.ps'		Rin
+	
+	$ ----- Part 8 ------
+	$ Rout
+	
+	alter	Vd	AC	=	0
+	alter	RL1		=	1G	$ OpenCircuit
+	TF	V(4,11)	Vs
+	print	"output_impedance_at_v(4,11)"
+	
+	$ ----- Part 9 ------
+	
+	$ THD 5v
+	alter	Vs	AC	=	0
+	alter	RL1		=	1K					$ change load to 1K
+	TRAN	10u	103m	100m
+	let	Vout		=	V(4)
+	let	Vin			=	V(1)
+	hardcopy	'Plot/B9-1.Input.ps'			Vin
+	hardcopy	'Plot/B9-2.Transient.ps'		Vout
+
+	FOURIER	1K	Vout
+	
+	$ ----- Part 10 ------
+	
+	$ THD 9v
+	alter	Vs	Sin	=	(0	0.9	1K)
+	alter	RL1		=	1K					$ change load to 1K
+	TRAN	10u	103m	100m
+	let	Vout		=	V(4)
+	let	Vin			=	V(1)
+	hardcopy	'Plot/B10-1.Input.ps'			Vin
+	hardcopy	'Plot/B10-2.Transient.ps'		Vout
+
+	FOURIER	1K	Vout
+	
+	$ ----- Part 11 ------
+	$ Gain Sweep
+	
+	DC	Vs	1m	1.2	10m
+	let	Gain	=		V(4)/V(1)
+	let	Vout	=		V(4)
+	hardcopy	'Plot/B11-1.Gain.ps'	Gain
+	hardcopy	'Plot/B11-2.Vout.ps'	Vout
+	
+	$ ----- Part 12 ------
+	$ Gm
+	
+	alter	Vc	SIN	=	(-19.5u 6m 1K)	
+	alter	RL1	=	1G	$ open circuit
+	alter	Rgm	=	0.01	$ short circuit
+	DC	Vs	1m	1.2	10m
+	let	Gm	=		(I(Vao))/V(1)
+	hardcopy	'Plot/B12-1.Gm.ps'			Gm
+	
+	
+	$ ----- Part 13 ------
+	$ temp sweep
+	
+	alter	RL1	=	1K	$ restore load
+	alter	Rgm	=	1G	$ open circuit
+	alter	Vs	=	0.5	$ set load
+	DC	TEMP	-15	100	1
+	let	Gain	=		V(4)/V(1)
+	hardcopy	'Plot/B13-1.Temp_Differential_Gain.ps'	Gain
+	
+	shell		./2jpg.sh				$ convert postscript to jpg
+.endc
+.end

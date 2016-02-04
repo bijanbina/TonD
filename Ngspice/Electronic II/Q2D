@@ -1,0 +1,73 @@
+Question 1
+
+.INCLUDE ua741
+*1: common mode voltage source
+*2: opamp input
+*3: output
+$ ////////Op Amp//////////
+Voss	Vss+	gnd	DC	10
+Voee	Vss-	gnd	DC	-10
+*OpAmp	in+	in-	ss+	ss-	out
+Xopamp1	gnd	2	Vss+	Vss-	3	uA741
+Xopamp2	gnd	12	Vss+	Vss-	13	uA741
+$ /////////Input/////////
+Vsin	1	gnd	DC	0	SIN	(0	1	1K)
+Vsqr	11	gnd	DC	0	PULSE	(-2 2 0 1n 1n 0.5m 1m)
+$ /////////Output////////
+C11	2	3	1u	IC=0
+R11	1	2	1K
+Rl11	3	gnd	1K
+
+C12	12	13	1u	IC=0
+R12	11	12	1K
+Rl12	13	gnd	1K
+
+///////////IDEAL/////////
+E11	7	gnd	gnd	6	1MEG
+C21	6	7	1u	IC=0
+R21	1	6	1K
+Rl21	7	gnd	1K
+
+E12	17	gnd	gnd	16	1MEG
+C22	16	17	1u	IC=0
+R22	11	16	1K
+Rl22	17	gnd	1K
+
+.control
+	set hcopypscolor=1
+	$ ----- Part 16 ------
+	$ Sin Ideal
+	
+	TRAN	10u	3m	0m
+	let	Vout	=	V(7)
+	let	Vin	=	V(1)
+	hardcopy	'Plot/B16-1.Vin.ps'	Vin
+	hardcopy	'Plot/B16-2.Vout.ps'	Vout
+		
+	$ ----- Part 17 ------
+	$ Square Ideal
+	TRAN	1u	3m	0m	UIC
+	let	Vout		=	V(17)
+	let	Vin		=	V(11)
+	hardcopy	'Plot/B17-1.Vin.ps'		Vin
+	hardcopy	'Plot/B17-2.Vout.ps'	Vout
+	
+	$ ----- Part 18 ------
+	$ Sin opamp
+	TRAN	1u	3m	0m
+	let	Vout	=	V(3)
+	let	Vin	=	V(1)
+	hardcopy	'Plot/B18-1.Vin.ps'		Vin
+	hardcopy	'Plot/B18-2.Vout.ps'	Vout
+	
+	$ ----- Part 19 ------
+	$ Square opamp
+	TRAN	1u	3m	0m	UIC
+	let	Vout		=	V(13)
+	let	Vin		=	V(11)
+	hardcopy	'Plot/B19-1.Vin.ps'	Vin
+	hardcopy	'Plot/B19-2.Vout.ps'	Vout
+	
+	shell		./2jpg.sh				$ convert postscript to jpg
+.endc
+.end
