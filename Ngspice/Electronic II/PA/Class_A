@@ -1,0 +1,39 @@
+Class A Power Amplifier
+
+$ //////////define model///////////
+.model QMOD1 npn
+
+$ ////////power amplifier//////////
+Voss	Vcc	gnd	DC	10
+Voee	Vee	gnd	DC	-10
+Q2	load	base2	Vee	QMOD1
+Q1	Vcc	base1	load	QMOD1
+
+$ /////////////bias////////////////
+.model	DSMOD	D is=10e-17
+D1	base2	Vee	DSMOD
+R1	gnd	base2	10
+
+$ /////////Input/////////
+Vin	base1	gnd	DC	1
+
+$ /////////Output////////
+* Vamp	3	4	DC	0			$ <---- output ampre meter
+RL	load	gnd	100
+
+
+.control
+	$ set plot options
+	set hcopypscolor=1
+	
+	$ ----- Part 1 ------
+	
+	$ Differential
+	DC	Vin	-10	15	0.1
+	let	Vout	=		V(load)
+	hardcopy	'Plot/1-2.DC_Differential_Vout.ps'	Vout
+	plot	V(base2)
+	
+	
+.endc
+.end
