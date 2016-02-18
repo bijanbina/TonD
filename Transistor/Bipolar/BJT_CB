@@ -1,19 +1,19 @@
 *BJT Common Base
 
-Vs	Vcc gnd DC 20
-Rc	Vcc ammeterc 1K
-V3	ammeterc collector  DC 0
-VB	base gnd DC 0.8
-CB  base gnd 1m
-*Co  collector VO 1u
-*R_L	VO gnd 100K
-Vin ammetere gnd SIN ( 0 40m 1K)
-.model QMOD1 npn
-Q1	collector base emitter QMOD1
-Ve	ammetere emitter  DC 0
+Vs	Vcc	gnd	DC	20
+Rc	Vcc	ammeterc	1K
+V3	ammeterc collector	DC	0
+VB	base	gnd	DC	0.8
+CB	base	gnd	1m
+*Co	collector	VO	1u
+*R_L	VO	gnd	100K
+Vin	ammetere gnd	SIN ( 0 40m 1K)
+.model	QMOD1	npn
+Q1	collector base	emitter	QMOD1
+Ve	ammetere  emitter  DC	0
 
 .control
-	TRAN	0.1us 2ms uic
+	TRAN	0.1us	2ms	uic
 	plot	V(emitter),V(collector)
 	plot	V(collector)-V(emitter)
 *	plot	I(V3)

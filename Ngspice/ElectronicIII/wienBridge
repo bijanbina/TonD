@@ -1,7 +1,7 @@
 Oscilator
-.INCLUDE ad8001
-Voss	Vcc	gnd	DC	10
-Voee	Vee	gnd	DC	-10
+.INCLUDE ad8014
+Voss	Vcc	gnd	DC	12
+Voee	Vee	gnd	DC	-12
 * OpAmp	in+	in-	ss+	ss-	out
 * Node assignments
 *               Non-inverting input
@@ -10,22 +10,22 @@ Voee	Vee	gnd	DC	-10
 *               | | | Negative supply
 *               | | | | Output
 *               | | | | |
-*xamp1	5	6	Vcc	Vee	out	AD8001A 
-.model	switch1 sw	vt=1	vh=1
-E1	out	gnd	5	6	1MEG
-s1	1	2	8	gnd 	switch1 OFF
+xamp1	5	6	Vcc	Vee	out	AD8014 
+.model	switch1 sw	vt=0	vh=0
+*E1	out	gnd	5	6	1MEG
+s1	5	2	8	gnd 	switch1 OFF
 
 R1	out	1	1K
 R2	5	gnd	1K
-C1	1	5	1p 
-C2	5	gnd	1p
-R21	out	6	3K
+C1	1	5	3p 
+C2	5	gnd	3p
+R21	out	6	4K
 R22	6	gnd	1k
-Vn	5	gnd	DC	1
-Vcont	8	gnd	DC	0	PULSE	(1 -1 10ns 1ps 1ps 100ns 100ns)
+Vn	2	gnd	DC	0.1
+Vcont	8	gnd	DC	0	PULSE	(1 -1 5ns 1ps 1ps 100ns 100ns)
 
 .control
-	TRAN 10p 100ns
+	TRAN 1ns 0.5us
 	plot v(out)
 	plot v(5)
 	plot v(8)
