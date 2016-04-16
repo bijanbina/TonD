@@ -3,16 +3,10 @@ Oscilator
 Voss	Vcc	gnd	DC	12
 Voee	Vee	gnd	DC	-12
 * OpAmp	in+	in-	ss+	ss-	out
-* Node assignments
-*               Non-inverting input
-*               | Inverting input
-*               | | Positive supply
-*               | | | Negative supply
-*               | | | | Output
-*               | | | | |
 xamp1	5	6	Vcc	Vee	out	AD8014 
+
 .model	switch1 sw	vt=0	vh=0
-*E1	out	gnd	5	6	1MEG
+
 s1	5	2	8	gnd 	switch1 OFF
 
 R1	out	1	1K

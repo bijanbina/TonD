@@ -1,9 +1,9 @@
 *this is FWR
 
-VIN vcc gnd SIN ( 0 12 50) DC=0 AC=9
-.model DMOD D (rs=10)
-D1 gnd vout DMOD
-C1 vcc vout 1n IC=0
+VIN	vcc	gnd	SIN ( 0 12 50) DC=0 AC=9
+.model	DMOD	D	(rs=10)
+D1	gnd	vout	DMOD
+C1	vcc	vout	1n	IC=0
 
 .control
 	TRAN	10us 100ms UIC
