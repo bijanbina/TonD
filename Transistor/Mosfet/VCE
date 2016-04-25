@@ -1,6 +1,6 @@
 .TITLE Vce I_D
-*Mosfet Transfer Function
-*all pin in lowercase
+* Mosfet Transfer Function
+* all pin in lowercase
 * V_ac gnd gate SIN ( 0 10m 1K)
 * V3	ammeterd	drain	DC	0	*ammeter
 *Name	Node+	Node-	TYPE	Value	Comment
@@ -14,7 +14,7 @@ M1	drain	gate	source	gnd	MOSB L=0.1U W=10U
 V1	Vdd	drain	DC	0
 
 .control
-	DC	Vs	0	5	0.05	Vg	0	2	0.5
+	DC	Vs	0	5	0.05	Vg	0	0.4	0.05
 	plot	I(V1)
 *plot width of M1 mosfet
 *plot @m1[w]

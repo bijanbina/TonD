@@ -6,7 +6,9 @@
 \usepackage{amsmath}%
 \usepackage{amssymb}
 \usepackage{lipsum}  
+
 \setcounter{section}{0}
+\numberwithin{equation}{section}%equation section
 \usetikzlibrary{intersections}
 
 \DeclareMathSizes{10}{10}{6}{6}
@@ -29,6 +31,7 @@
 
 \newpage
 \TonDdef{Common Emiiter} % Teacher/lecturer
+~\vspace{-1em}
 \section{Bipolar Transistor}
 \input{Analysis/CE}
 
@@ -65,8 +68,20 @@
 
 \newpage
 \TonDdef{Electronic II} % Teacher/lecturer
+~\vspace{-1em}
 \section{Electronic II}
 \input{Analysis/FeedBack}
+
+
+\newpage
+\TonDdef{Differential Pair} % Teacher/lecturer
+\input{Analysis/DifferentialPair}
+
+\newpage
+\TonDdef{Electronic III} % Teacher/lecturer
+~\vspace{-1em}
+\section{Electronic III}
+\input{Analysis/bjt-model}
 
 
 \end{document}
