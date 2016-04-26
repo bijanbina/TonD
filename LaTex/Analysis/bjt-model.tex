@@ -1,15 +1,26 @@
 ~\vspace{-3em}
 \subsection{Bipolar Transistor Model}\vspace{0.5em}
-Forward base transit time, $\tau_F$ is time need for electron go trough base to reach collector. In other word time needed for transistor become on or off. ~\\
+Forward base transit time, $\tau_F$ is time need for electron go trough base to reach collector. In other word time needed for transistor become on or off. this effect is modeled by a capacitance called $C_b$ or $C_D$ (Diffusion capacitance) ~\\
 \begin{equation}
 C_b = \tau_F g_m ~~ , ~~\tau_F = \frac{W_B^2}{2D_n}
 \end{equation}
 ~\\
 $C_{\mu}$ or $C_j$ is junction reverse bias forward between base and collector which known as $C_{j0}$ is base-collector capacitance measured at zero bias. $V_j$ is junction reverse bias voltage that always assume positive and $V_b$ or $\phi_0$ is junction built-in voltage.~\\
+
 \begin{equation}
 C_j = \frac{C_{j0}}{\sqrt{1 + \frac{v_j}{v_b}}} ~~ , ~~ v_b = \frac{N_A N_D}{n_i^2} 
 \end{equation}
-~\\which has maximum of $ 2 C_{j0} $
+
+~\\which has maximum of $ 2 C_{j0} $. These capacitance affect intrinsic gain, $\beta$, which parametrized in two form, $f_T$ and $f_{\beta}$. $f_t$ is where $\beta=1$ and $f_{\beta}$ is the effective pole corner frequency~\\
+
+\begin{equation}
+f_{T,max} = \frac{1}{2\pi\tau_f} ~~ , ~~ f_{T} = \frac{g_m}{2\pi (C_{\mu} + C_\pi)}
+\end{equation}
+\begin{equation}
+f_{\beta} \cdot \beta = f_T \cdot 1
+\end{equation}
+
+~
 
 \par
 \setlength{\parindent}{0.5cm} % Default is 15pt.
@@ -22,3 +33,9 @@ Mosfet Transitors
 \begin{equation}
 C_{GS} = C_{GS,ov} + \frac{2}{3} C_{oxt} ~~ , ~~ C_{oxt} = C_{ox} W \cdot L_{eff}
 \end{equation}
+
+\begin{equation}
+f_{T,max} = \frac{1}{2\pi}\frac{v_{sat}}{\tau_f} ~~ , ~~ f_{T} = \frac{1}{2\pi (C_{GS} + C_{GD})}
+\end{equation}~
+
+where $v_{sat}$ is electron saturation velocity

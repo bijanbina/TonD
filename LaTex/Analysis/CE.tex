@@ -8,12 +8,12 @@ $$ I_{diode} = I_S ( exp (\dfrac{V_{BE}}{V_T}) - 1) $$
 
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \par
-Common x is an amplifing configuration which the node x, is isolated from both input source and output node. To compute swing voltage this node and the output node are plotted versus $I_C$. This is done to independ the swing calculation from input alternate. So as said in Common Source configuration this is $I_D$ versus $V_DS$. After writing DC load line from mentioned nodes. We determine AC Line, Slope. So we define AC Line. AC Line is a Line with "AC Line Slope" Slope and pass from Quiscent point. so for common emitter configuration it is $ I_C = - ( R_C || R_L )^{-1} V_{CE} $
+Common x is an amplifing configuration which the node x, is isolated from both input source and output node. To compute swing voltage this node and the output node are plotted versus $I_C$. This is done to independ the swing calculation from input alternate. So as said in Common Source configuration this is $I_D$ versus $V_{DS}$. After writing DC load line from mentioned nodes, We determine AC Line, Slope. So we define AC Line. AC Line is a Line with "AC Line Slope" Slope and pass from Quiscent point. so for common emitter configuration it is $ I_C = - ( R_C || R_L )^{-1} V_{CE} $
 ~\\~\\
 \setlength{\parindent}{0.0cm} 
 \begin{minipage}[b]{.5\textwidth}
 $ R_o = (r_\pi ~||~ R_E) + ( 1 + g_m (r_\pi ~||~ R_E) )r_o$ or \\
-$ R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
+$ R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m r_o  )$ \\
 $ if ( g_m R_o = r_o + (r_\pi ~||~ R_E)( 1 + g_m  )$ \\
 \par 
 \input{Circuits/BJT_Diode}
