@@ -1,6 +1,22 @@
 \subsection{Multistage Amplifiers}
-To calculate multistage gain for a amplifier. first calculate gain from $V_{in}$ to $V_x$ considering next stage load. then calculate $R_{out}$ of input stage by disconnecting second stage. then put $R_{out}$ series with a voltage source showing amplify voltage. For calcualting next stage gain note that in the nominator of CE, CB and their MOSFET configuration equivalent, the R_C is $_{out}$ so in order to get the correct gain you have to calculate $R_out$ considering last stage output resistance. this can be known in cascode amplifier (cascaded triodes).
+\begin{minipage}[b]{.7\textwidth}
+\setlength{\abovedisplayshortskip}{15pt}
+\setlength{\belowdisplayshortskip}{15pt} 
+To calculate multistage gain for a amplifier. first calculate gain from $V_{in}$ to $V_X$ considering next stage load. 
+$$ A_1 = \frac{V_X}{V_{in}} = -g_{m1} R_D = -\frac{g_{m1}}{g_{m2}} $$
+then the gain from $V_X$ to $V_{out}$ is
+$$ A_2 = \frac{V_{out}}{V_{X}} = g_{m2} R_{O} = {g_{m2}}\,({g_{m2} r_{o1} r _{o2}}) $$
+so the overall gain is
+$$ A = A_1 \times A_2 = \frac{V_{out}}{V_{in}} = {g_{m1}}\,({g_{m2} r_{o1} r _{o2}}) $$
+note that for second stage there is no need to consider input resistance as it's already has been calculated as a load of first stage.
+\end{minipage}%
+\begin{minipage}{.3\textwidth}
+\vspace{-25em}
+\hspace{3em}
 \input{Circuits/CascodeGain}
+\end{minipage}%
+
+
 \subsection{Current Mirrors}
 \subsubsection{Wilson}
 $$ 3~Mosfet ~~ , ~~ I_C = \frac{I_{Ref}}{1 + 2 \beta} $$
