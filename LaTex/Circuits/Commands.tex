@@ -12,6 +12,14 @@
 \def \TondVcc{node [anchor=south] {$V_{CC}$} ++(-\VccLabelSpace,0) --  ++(2*\VccLabelSpace,0)}%VCC
 \newcommand{\TondOut}[1]{\node [shape=circle,anchor=west,draw,minimum size=0.1cm,inner sep=0pt] at (#1) {}};
 \newcommand{\TondOutE}[1]{\node [shape=circle,anchor=east,draw,minimum size=0.1cm,inner sep=0pt] at (#1) {}};
+\newcommand{\TondNode}[3]{
+\node [shape=circle,minimum size=0.1cm,inner sep=0pt,fill=black] at (#1) {};
+\ifthenelse{\equal{⟨#3⟩}{⟨n⟩}}{\node [anchor=north] at (#1) {#2};}{}
+\ifthenelse{\equal{⟨#3⟩}{⟨e⟩}}{\node [anchor=east] at (#1) {#2};}{}
+\ifthenelse{\equal{⟨#3⟩}{⟨s⟩}}{\node [anchor=south] at (#1) {#2};}{}
+\ifthenelse{\equal{⟨#3⟩}{⟨w⟩}}{\node [anchor=west] at (#1) {#2};}{}
+\equal{⟨string⟩}{⟨string⟩}
+}
 
 %Draw input signal generator on right of node
 \newcommand{\TondSigR}[1]{
