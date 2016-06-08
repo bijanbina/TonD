@@ -59,14 +59,18 @@ BoldItalicFont=texgyreheros-bolditalic.otf]
 }
 
 \renewcommand{\section}[1]{
+  \phantomsection
   \addtocounter{section}{1}
   \setcounter{subsection}{0}
+  \setcounter{equation}{0}
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}
   \par\vspace{\parskip}
   {%
     \LARGE\headingfont\color{headercolor} $\blacksquare$ #1%
     %\@sectioncolor #1%
   }
   \par\vspace{\parskip}
+  
 }
 
 \begin{comment} %all section formatting are overwritten by next lines

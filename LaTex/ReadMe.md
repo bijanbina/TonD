@@ -18,5 +18,6 @@ possible directions
 
 ###\TondOut
 draw an output node (little circle) at `position` where `position` is a node in TikZ
+
 `TondOut{position}`
 

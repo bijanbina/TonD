@@ -1,29 +1,30 @@
 \documentclass{article}
-\input{Design/packages}
-\input{Design/element4}
-\input{Design/design}
+%\usepackage{kpfonts}  
 \input{Design/header}
 \usepackage{amsmath}%
 \usepackage{amssymb}
 \usepackage{lipsum}  
+\usepackage{xfrac}
+%\usepackage{mathptmx}
 
 \setcounter{section}{0}
 \numberwithin{equation}{section}%equation section
 \usetikzlibrary{intersections}
 
-\DeclareMathSizes{10}{10}{6}{6}
+
+%\DeclareMathSizes{10}{10}{8}{6}
 \begin{document}
 \input{Circuits/TonD}
 \ctikzset{bipoles/length=1cm}
 \ctikzset{bipoles/resistor/height=0.25}
 \ctikzset{bipoles/capacitor/height=0.4}
 
-\pagecolor{backGray}\afterpage{\pagecolor{backCirc}}
+\pagecolor{mainTheme}\afterpage{\pagecolor{backCirc}}
 \maketitle
+\thispagestyle{empty}
 
 
 \newcommand{\TonDdef}[1]{
-\pdfbookmark[0]{#1}{#1}
 \renewcommand{\Places}{#1} % Teacher/lecturer
 }
 
@@ -72,8 +73,6 @@
 \section{Electronic II}
 \input{Analysis/FeedBack}
 
-
-\newpage
 \TonDdef{Differential Pair} % Teacher/lecturer
 \input{Analysis/DifferentialPair}
 
@@ -82,6 +81,7 @@
 ~\vspace{-1em}
 \section{Electronic III}
 \input{Analysis/bjt-model}
+\input{Analysis/stability}
 
 
 \end{document}
