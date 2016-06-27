@@ -1,0 +1,48 @@
+OTA
+
+.model nch NMOS(level=1   vto=0.7 gamma=0.45 phi=0.9 nsub=9e+14
++  ld=0.08e-6 uo=350 lambda=0.1 tox=9e-9 pb=0.9 cj=0.56e-3 cjsw=0.35e-11 mj=0.45 
++  mjsw=0.2  cgdo=0.4e-9 js=1e-8)
+
+.model pch PMOS(level=1   vto=-0.8 gamma=0.4 phi=0.8 nsub=5e+14
++  ld=0.09e-6 uo=100 lambda=0.2 tox=9e-9 pb=0.9 cj=0.94e-3 cjsw=0.32e-11 mj=0.5 
++  mjsw=0.3  cgdo=0.3e-9 js=0.5e-8)
+
+.PARAM  t=2
+Vs	Vdd	gnd	DC	3
+Vin1	vinn	gnd	DC	1.5
+Vin2	vinp	gnd	DC	1.5	AC	1	SIN	(1.5	-0.001	1K) 
+Ib      Vdd     G7      0.15m
+
+*       DRAIN   GATE    SOURCE  BULK
+M1	G3	vinn	tail	tail	nch	L=10U	W=36.5U
+M2	G5	vinp	tail	tail	nch	L=10U	W=36.5U
+M3	G3	G3	Vdd	Vdd	pch	L=10U	W=71.15U
+M4	G5	G3	Vdd	Vdd	pch	L=10U	W=71.15U
+M5	Vout	G5	Vdd	Vdd	pch	L=10U	W=150.55U
+M6	Vout	G7	gnd	gnd	nch	L=10U	W=56.038U
+M7	tail	G7	gnd	gnd	nch	L=10U	W=52.97U
+M8	G7	G7	gnd	gnd	nch	L=10U	W=89.19U
+
+
+Vcl	vout	cl2	DC	0
+Cl      cl2	gnd     2p
+
+
+.control
+	*DC	Vin2	0	2	0.1
+	OP
+	print @m6[id]
+	set hcopypscolor=1
+	TRAN	0.18U	3m	0m
+	plot	V(Vout)
+	plot	V(vinp)
+	plot	V(vinn)
+	plot	V(G3)
+	
+	FOURIER	1K	Vout
+	AC	DEC	100	10	10MEG
+	plot	V(Vout)
+.endc
+
+.end
