@@ -1,7 +1,7 @@
 Oscilator
 .INCLUDE ad8014
-Voss	Vcc	gnd	DC	12
-Voee	Vee	gnd	DC	-12
+Vocc	Vcc	gnd	DC	5
+Voee	Vee	gnd	DC	-5
 * OpAmp	in+	in-	ss+	ss-	out
 xamp1	5	6	Vcc	Vee	out	AD8014 
 
@@ -11,15 +11,15 @@ s1	5	2	8	gnd 	switch1 OFF
 
 R1	out	1	1K
 R2	5	gnd	1K
-C1	1	5	3p 
-C2	5	gnd	3p
-R21	out	6	4K
+C1	1	5	10p 
+C2	5	gnd	10p
+R21	out	6	2.2K
 R22	6	gnd	1k
 Vn	2	gnd	DC	0.1
 Vcont	8	gnd	DC	0	PULSE	(1 -1 5ns 1ps 1ps 100ns 100ns)
 
 .control
-	TRAN 1ns 0.5us
+	TRAN 10ns 100us
 	plot v(out)
 	plot v(5)
 	plot v(8)

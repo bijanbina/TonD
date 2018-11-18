@@ -2,10 +2,18 @@
 $$ A_V = \dfrac{R_D || R_L}{g_m^{-1} + R_S||R_{sig}} ~~ , ~~  {\Delta}_1 = V_{DSQ} - V_{ov} ~~ , ~~ I_{DQ} - \frac{{\Delta}_2}{R_{ac}} = 0 $$
 \setlength{\parindent}{0.5cm} % Default is 15pt.
 \par
-\lipsum[1-3]
+\lipsum[1] \par
+Some special case is shown down here where a feedback resistor, $R_f$ connect mosfet gate to drain. In this case the input resistance shown in circuit is always equal to following and did not depent on $R_f$ value.
+$$ R_{in} = \frac{1}{g_m} $$
+\par
 \setlength{\parindent}{0.0cm} 
-\begin{minipage}[b]{.5\textwidth}
-\lipsum[66]
+\begin{minipage}[t]{.5\textwidth}
+\vspace{0pt}
+\begin{minipage}[t]{\linewidth}
+\includegraphics[width=0.7\textwidth]{Resources/rin2_mos.pdf}
+\centering
+%\captionof{figure}{Sound spectrum}
+\end{minipage}
 \begin{tikzpicture}
 \tikzset{>=latex}
 %lines
@@ -37,12 +45,10 @@ $$ A_V = \dfrac{R_D || R_L}{g_m^{-1} + R_S||R_{sig}} ~~ , ~~  {\Delta}_1 = V_{DS
 \Cote{(\Vsat,0)}{(Vceq)}{${\Delta}_1$}
 \Cote{(Vceq)}{(D2)}{${\Delta}_2$}
 
-\end{tikzpicture}\\
+\end{tikzpicture}
 \end{minipage}%
-\noindent
-\setlength{\parindent}{0.0cm} 
-\hspace*{-\parindent}%
-\begin{minipage}[b]{.5\textwidth}
+\begin{minipage}[t]{.45\textwidth}
+\vspace{0pt}
 \centering
 \input{Circuits/CG}
 \end{minipage}%
